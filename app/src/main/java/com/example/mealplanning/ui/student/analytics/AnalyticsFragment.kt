@@ -1,4 +1,4 @@
-package com.example.mealplanning.ui.analytics
+package com.example.mealplanning.ui.student.analytics
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.mealplanning.databinding.FragmentAnalyticsBinding
+import com.example.mealplanning.databinding.FragmentAnalyticsStudentBinding
 
 class AnalyticsFragment : Fragment() {
 
-    private var _binding: FragmentAnalyticsBinding? = null
+    private var _binding: FragmentAnalyticsStudentBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -22,17 +22,16 @@ class AnalyticsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val dashboardViewModel =
-            ViewModelProvider(this)[AnalyticsViewModel::class.java]
+        val dashboardViewModel = ViewModelProvider(this)[AnalyticsViewModel::class.java]
 
-        _binding = FragmentAnalyticsBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        _binding = FragmentAnalyticsStudentBinding.inflate(inflater, container, false)
+   /*     val root: View = binding.root
 
         val textView: TextView = binding.textDashboard
         dashboardViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
-        }
-        return root
+        } */
+        return _binding!!.root
     }
 
     override fun onDestroyView() {

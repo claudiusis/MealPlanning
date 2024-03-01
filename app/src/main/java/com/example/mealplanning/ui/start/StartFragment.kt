@@ -7,12 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.mealplanning.R
+import com.example.mealplanning.databinding.FragmentStartBinding
 
 class StartFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = StartFragment()
-    }
+    lateinit var binding: FragmentStartBinding
 
     private lateinit var viewModel: StartViewModel
 
@@ -20,13 +19,14 @@ class StartFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_start, container, false)
+        binding = FragmentStartBinding.inflate(layoutInflater)
+        return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(StartViewModel::class.java)
-        // TODO: Use the ViewModel
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel = ViewModelProvider(this)[StartViewModel::class.java]
+
     }
 
 }

@@ -1,4 +1,4 @@
-package com.example.mealplanning.ui.account
+package com.example.mealplanning.ui.student.menu
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.mealplanning.databinding.FragmentAccountBinding
+import com.example.mealplanning.databinding.FragmentMenuStudentBinding
 
-class AccountFragment : Fragment() {
+class MenuFragment : Fragment() {
 
-    private var _binding: FragmentAccountBinding? = null
+    private var _binding: FragmentMenuStudentBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -22,17 +22,16 @@ class AccountFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
-            ViewModelProvider(this)[AccountViewModel::class.java]
+        val notificationsViewModel = ViewModelProvider(this)[MenuViewModel::class.java]
 
-        _binding = FragmentAccountBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        _binding = FragmentMenuStudentBinding.inflate(inflater, container, false)
+ /*       val root: View = binding.root
 
-        val textView: TextView = binding.textHome
-        homeViewModel.text.observe(viewLifecycleOwner) {
+        val textView: TextView = binding.textNotifications
+        notificationsViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
-        }
-        return root
+        } */
+        return _binding!!.root
     }
 
     override fun onDestroyView() {

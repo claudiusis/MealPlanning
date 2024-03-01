@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.start.StartFragment"
+    android:id="@+id/startFragment"
     >
 
 
@@ -35,7 +36,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <Button
-        android:id="@+id/parentBtn"
+        android:id="@+id/studentBtn"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -45,14 +46,14 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <Button
-        android:id="@+id/studentBtn"
+        android:id="@+id/parentBtn"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Родитель"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/parentBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/studentBtn" />
 
     <Button
         android:id="@+id/workerBtn"
