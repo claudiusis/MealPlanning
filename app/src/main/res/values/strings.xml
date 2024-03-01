@@ -2,6 +2,5 @@
     <string name="app_name">MealPlanning</string>
     <string name="menu">Меню</string>
     <string name="title_analytics">Аналитика</string>
-    <string name="title_favourites">Избранное</string>
     <string name="title_account">Аккаунт</string>
 </resources>
