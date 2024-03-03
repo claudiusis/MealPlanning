@@ -9,7 +9,11 @@
         android:id="@+id/navigation_menu_student"
         android:name="com.example.mealplanning.ui.student.menu.MenuFragment"
         android:label="@string/menu"
-        tools:layout="@layout/fragment_menu_student" />
+        tools:layout="@layout/fragment_menu_student" >
+        <action
+            android:id="@+id/action_navigation_menu_student_to_informationFragment"
+            app:destination="@id/informationFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_analytics_student"
@@ -30,5 +34,14 @@
         <action
             android:id="@+id/action_startFragment_to_navigation_menu_student"
             app:destination="@id/navigation_menu_student" />
+    </fragment>
+    <fragment
+        android:id="@+id/informationFragment"
+        android:name="com.example.mealplanning.ui.student.menu.InformationFragment"
+        android:label="fragment_information"
+        tools:layout="@layout/fragment_information" >
+        <argument
+            android:name="nameDish"
+            app:argType="string" />
     </fragment>
 </navigation>
