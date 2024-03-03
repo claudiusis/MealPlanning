@@ -5,8 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.example.mealplanning.R
 import com.example.mealplanning.databinding.FragmentMenuStudentBinding
 
 class MenuFragment : Fragment() {
@@ -31,6 +34,75 @@ class MenuFragment : Fragment() {
         notificationsViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         } */
+
+        binding.imageFood1.setOnClickListener {
+            val bundle = bundleOf()
+            bundle.putString("nameDish", binding.foodName1.text.toString())
+            findNavController().navigate(R.id.action_navigation_menu_student_to_informationFragment, bundle)
+        }
+
+        binding.foodName1.setOnClickListener {
+            val bundle = bundleOf()
+            bundle.putString("nameDish", binding.foodName1.text.toString())
+            findNavController().navigate(R.id.action_navigation_menu_student_to_informationFragment, bundle)
+        }
+
+        binding.imageFood2.setOnClickListener {
+            val bundle = bundleOf()
+            bundle.putString("nameDish", binding.foodName2.text.toString())
+            findNavController().navigate(R.id.action_navigation_menu_student_to_informationFragment, bundle)
+        }
+
+
+        binding.foodName2.setOnClickListener {
+            val bundle = bundleOf()
+            bundle.putString("nameDish", binding.foodName2.text.toString())
+            findNavController().navigate(R.id.action_navigation_menu_student_to_informationFragment, bundle)
+        }
+
+
+        binding.imageFood3.setOnClickListener {
+            val bundle = bundleOf()
+            bundle.putString("nameDish", binding.foodName3.text.toString())
+            findNavController().navigate(R.id.action_navigation_menu_student_to_informationFragment, bundle)
+        }
+
+
+        binding.foodName3.setOnClickListener {
+            val bundle = bundleOf()
+            bundle.putString("nameDish", binding.foodName3.text.toString())
+            findNavController().navigate(R.id.action_navigation_menu_student_to_informationFragment, bundle)
+        }
+
+
+        val checkBox1=binding.checkFood1
+        val checkBox2=binding.checkFood2
+        val checkBox3=binding.checkFood3
+
+
+        checkBox1.setOnCheckedChangeListener { buttonView, isChecked ->
+            if(isChecked){
+                checkBox2.isChecked=false
+                checkBox3.isChecked=false
+            }
+        }
+
+        checkBox2.setOnCheckedChangeListener { buttonView, isChecked ->
+            if(isChecked){
+                checkBox1.isChecked=false
+                checkBox3.isChecked=false
+            }
+        }
+
+
+        checkBox3.setOnCheckedChangeListener { buttonView, isChecked ->
+            if(isChecked){
+                checkBox2.isChecked=false
+                checkBox1.isChecked=false
+            }
+        }
+
+
         return _binding!!.root
     }
 
