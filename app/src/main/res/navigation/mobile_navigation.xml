@@ -34,6 +34,9 @@
         <action
             android:id="@+id/action_startFragment_to_navigation_menu_student"
             app:destination="@id/navigation_menu_student" />
+        <action
+            android:id="@+id/action_startFragment_to_menuCreatorScheduleFragment"
+            app:destination="@id/menuCreatorScheduleFragment" />
     </fragment>
     <fragment
         android:id="@+id/informationFragment"
@@ -44,4 +47,18 @@
             android:name="nameDish"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/menuCreatorScheduleFragment"
+        android:name="com.example.mealplanning.ui.MenuCreator.MenuCreatorScheduleFragment"
+        android:label="fragment_menu_creator_schedule"
+        tools:layout="@layout/fragment_menu_creator_schedule" >
+        <action
+            android:id="@+id/action_menuCreatorScheduleFragment_to_foodChooseMenuFragment"
+            app:destination="@id/foodChooseMenuFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/foodChooseMenuFragment"
+        android:name="com.example.mealplanning.ui.MenuCreator.FoodChooseMenuFragment"
+        android:label="fragment_food_choose_menu"
+        tools:layout="@layout/fragment_food_choose_menu" />
 </navigation>
