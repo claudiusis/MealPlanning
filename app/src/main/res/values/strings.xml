@@ -3,4 +3,5 @@
     <string name="menu">Меню</string>
     <string name="title_analytics">Аналитика</string>
     <string name="title_account">Аккаунт</string>
+    <string name="please_wait">Пожалуйста подождите</string>
 </resources>
