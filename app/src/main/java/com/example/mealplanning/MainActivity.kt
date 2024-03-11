@@ -19,38 +19,12 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    lateinit var appBarConfiguration : AppBarConfiguration
+    private lateinit var appBarConfiguration : AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        if(supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main)!=null){
-            binding.navView.visibility = View.GONE
-        }
-
-        val navView: BottomNavigationView = binding.navView
-
-        val navController = findNavController(R.id.nav_host_fragment_activity_main)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.navigation_menu_student, R.id.navigation_analytics_student, R.id.navigation_account_student
-            )
-        )
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
-
-        val btnStudent=findViewById<Button>(R.id.studentBtn)
-
-        btnStudent.setOnClickListener {
-            navController.navigate(R.id.navigation_menu_student)
-            binding.navView.visibility=View.VISIBLE
-        }
-
 
     }
 }

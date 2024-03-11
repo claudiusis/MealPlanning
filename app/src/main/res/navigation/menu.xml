@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/menu"
+    app:startDestination="@id/menuFragment">
+    <fragment
+        android:id="@+id/menuFragment"
+        android:name="com.example.mealplanning.ui.student.menu.MenuFragment"
+        android:label="MenuFragment"
+        tools:layout="@layout/fragment_menu_student">
+        <action
+            android:id="@+id/action_menuFragment_to_informationFragment"
+            app:destination="@id/informationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/informationFragment"
+        android:name="com.example.mealplanning.ui.student.menu.InformationFragment"
+        android:label="fragment_information"
+        tools:layout="@layout/fragment_information" />
+</navigation>
