@@ -2,17 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_menu_student"
+        android:id="@id/menu"
         android:icon="@drawable/baseline_menu_book_24"
         android:title="@string/menu" />
 
     <item
-        android:id="@+id/navigation_analytics_student"
+        android:id="@+id/analitic"
         android:icon="@drawable/baseline_analytics_24"
         android:title="@string/title_analytics" />
 
     <item
-        android:id="@+id/navigation_account_student"
+        android:id="@+id/account"
         android:icon="@drawable/baseline_account_circle_24"
         android:title="@string/title_account" />
 

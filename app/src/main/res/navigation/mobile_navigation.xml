@@ -1,64 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mobile_navigation"
-    app:startDestination="@id/startFragment">
-
-    <fragment
-        android:id="@+id/navigation_menu_student"
-        android:name="com.example.mealplanning.ui.student.menu.MenuFragment"
-        android:label="@string/menu"
-        tools:layout="@layout/fragment_menu_student" >
-        <action
-            android:id="@+id/action_navigation_menu_student_to_informationFragment"
-            app:destination="@id/informationFragment" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/navigation_analytics_student"
-        android:name="com.example.mealplanning.ui.student.analytics.AnalyticsFragment"
-        android:label="@string/title_analytics"
-        tools:layout="@layout/fragment_analytics_student" />
-
-    <fragment
-        android:id="@+id/navigation_account_student"
-        android:name="com.example.mealplanning.ui.student.account.AccountFragment"
-        android:label="@string/title_account"
-        tools:layout="@layout/fragment_account_student" />
-    <fragment
-        android:id="@+id/startFragment"
-        android:name="com.example.mealplanning.ui.start.StartFragment"
-        android:label="fragment_start"
-        tools:layout="@layout/fragment_start" >
-        <action
-            android:id="@+id/action_startFragment_to_navigation_menu_student"
-            app:destination="@id/navigation_menu_student" />
-        <action
-            android:id="@+id/action_startFragment_to_menuCreatorScheduleFragment"
-            app:destination="@id/menuCreatorScheduleFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/informationFragment"
-        android:name="com.example.mealplanning.ui.student.menu.InformationFragment"
-        android:label="fragment_information"
-        tools:layout="@layout/fragment_information" >
-        <argument
-            android:name="nameDish"
-            app:argType="string" />
-    </fragment>
-    <fragment
-        android:id="@+id/menuCreatorScheduleFragment"
-        android:name="com.example.mealplanning.ui.MenuCreator.MenuCreatorScheduleFragment"
-        android:label="fragment_menu_creator_schedule"
-        tools:layout="@layout/fragment_menu_creator_schedule" >
-        <action
-            android:id="@+id/action_menuCreatorScheduleFragment_to_foodChooseMenuFragment"
-            app:destination="@id/foodChooseMenuFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/foodChooseMenuFragment"
-        android:name="com.example.mealplanning.ui.MenuCreator.FoodChooseMenuFragment"
-        android:label="fragment_food_choose_menu"
-        tools:layout="@layout/fragment_food_choose_menu" />
+    app:startDestination="@id/account"
+    android:id="@+id/mobile_navigation">
+    <include app:graph="@navigation/account" />
+    <include app:graph="@navigation/menu" />
+    <include app:graph="@navigation/analitic" />
 </navigation>

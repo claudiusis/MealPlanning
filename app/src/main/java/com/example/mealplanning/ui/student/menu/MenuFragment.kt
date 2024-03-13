@@ -38,40 +38,40 @@ class MenuFragment : Fragment() {
         binding.imageFood1.setOnClickListener {
             val bundle = bundleOf()
             bundle.putString("nameDish", binding.foodName1.text.toString())
-            findNavController().navigate(R.id.action_navigation_menu_student_to_informationFragment, bundle)
+            findNavController().navigate(R.id.action_menuFragment_to_informationFragment, bundle)
         }
 
         binding.foodName1.setOnClickListener {
             val bundle = bundleOf()
             bundle.putString("nameDish", binding.foodName1.text.toString())
-            findNavController().navigate(R.id.action_navigation_menu_student_to_informationFragment, bundle)
+            findNavController().navigate(R.id.action_menuFragment_to_informationFragment, bundle)
         }
 
         binding.imageFood2.setOnClickListener {
             val bundle = bundleOf()
             bundle.putString("nameDish", binding.foodName2.text.toString())
-            findNavController().navigate(R.id.action_navigation_menu_student_to_informationFragment, bundle)
+            findNavController().navigate(R.id.action_menuFragment_to_informationFragment, bundle)
         }
 
 
         binding.foodName2.setOnClickListener {
             val bundle = bundleOf()
             bundle.putString("nameDish", binding.foodName2.text.toString())
-            findNavController().navigate(R.id.action_navigation_menu_student_to_informationFragment, bundle)
+            findNavController().navigate(R.id.action_menuFragment_to_informationFragment, bundle)
         }
 
 
         binding.imageFood3.setOnClickListener {
             val bundle = bundleOf()
             bundle.putString("nameDish", binding.foodName3.text.toString())
-            findNavController().navigate(R.id.action_navigation_menu_student_to_informationFragment, bundle)
+            findNavController().navigate(R.id.action_menuFragment_to_informationFragment, bundle)
         }
 
 
         binding.foodName3.setOnClickListener {
             val bundle = bundleOf()
             bundle.putString("nameDish", binding.foodName3.text.toString())
-            findNavController().navigate(R.id.action_navigation_menu_student_to_informationFragment, bundle)
+            findNavController().navigate(R.id.action_menuFragment_to_informationFragment, bundle)
         }
 
 
