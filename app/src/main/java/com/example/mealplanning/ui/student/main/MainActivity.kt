@@ -1,4 +1,4 @@
-package com.example.mealplanning
+package com.example.mealplanning.ui.student.main
 
 import android.os.Bundle
 

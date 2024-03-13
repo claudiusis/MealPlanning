@@ -1,6 +1,5 @@
-package com.example.mealplanning
+package com.example.mealplanning.ui.student.main
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
+import com.example.mealplanning.R
 import com.example.mealplanning.databinding.FragmentMainBinding
 import com.google.android.material.navigation.NavigationBarView
 
