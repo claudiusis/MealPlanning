@@ -49,6 +49,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/editBtn"
+        android:textAllCaps="false"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -64,6 +65,7 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />
 
     <com.google.android.material.button.MaterialButton
+        android:textAllCaps="false"
         android:id="@+id/exitBtn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
