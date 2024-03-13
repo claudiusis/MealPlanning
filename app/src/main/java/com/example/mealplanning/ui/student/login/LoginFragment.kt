@@ -1,4 +1,4 @@
-package com.example.mealplanning.login
+package com.example.mealplanning.ui.student.login
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
