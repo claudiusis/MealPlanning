@@ -13,10 +13,27 @@
         <action
             android:id="@+id/action_loginFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_calendarMenuCreator"
+            app:destination="@id/calendarMenuCreator" />
     </fragment>
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.example.mealplanning.ui.student.main.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" />
+    <fragment
+        android:id="@+id/calendarMenuCreator"
+        android:name="menu_creator.CalendarMenuCreator"
+        android:label="fragment_calendar_menu_creator"
+        tools:layout="@layout/fragment_calendar_menu_creator" >
+        <action
+            android:id="@+id/action_calendarMenuCreator_to_chooseFood"
+            app:destination="@id/chooseFood" />
+    </fragment>
+    <fragment
+        android:id="@+id/chooseFood"
+        android:name="menu_creator.ChooseFood"
+        android:label="fragment_choose_food"
+        tools:layout="@layout/fragment_choose_food" />
 </navigation>

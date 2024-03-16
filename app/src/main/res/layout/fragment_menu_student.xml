@@ -19,7 +19,7 @@
             android:layout_marginStart="16dp"
             android:text="Выберите блюдо"
             android:textColor="@color/black"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -66,7 +66,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:text="Макароны с сыром"
-                        android:textSize="32dp"
+                        android:textSize="32sp"
                         app:layout_constraintBottom_toBottomOf="@+id/imageFood1"
                         app:layout_constraintStart_toEndOf="@+id/imageFood1"
                         app:layout_constraintTop_toTopOf="@+id/imageFood1" />
@@ -116,7 +116,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:text="Пюре с котлетой"
-                        android:textSize="32dp"
+                        android:textSize="32sp"
                         app:layout_constraintBottom_toBottomOf="@+id/imageFood2"
                         app:layout_constraintStart_toEndOf="@+id/imageFood2"
                         app:layout_constraintTop_toTopOf="@+id/imageFood2" />
@@ -157,7 +157,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:text="Плов"
-                        android:textSize="32dp"
+                        android:textSize="32sp"
                         app:layout_constraintBottom_toBottomOf="@+id/imageFood3"
                         app:layout_constraintStart_toEndOf="@+id/imageFood3"
                         app:layout_constraintTop_toTopOf="@+id/imageFood3" />

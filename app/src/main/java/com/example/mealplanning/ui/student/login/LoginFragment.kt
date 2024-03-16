@@ -26,6 +26,11 @@ class LoginFragment : Fragment() {
             findNavController().navigate(R.id.action_loginFragment_to_mainFragment)
         }
 
+        mBinding.workerBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_calendarMenuCreator)
+        }
+
+
         return mBinding.root
     }
 
