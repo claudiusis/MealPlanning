@@ -1,10 +1,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:id="@+id/item_dish">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imageDish"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:src="@drawable/ic_launcher_background" />
@@ -17,7 +18,7 @@
         android:layout_marginStart="12dp">
 
         <TextView
-            android:id="@+id/titleTextView"
+            android:id="@+id/textNameDish"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Название"
@@ -28,7 +29,7 @@
             />
 
         <TextView
-            android:id="@+id/descriptionTextView"
+            android:id="@+id/textDescriptionDish"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Описание"

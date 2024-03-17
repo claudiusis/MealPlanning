@@ -7,39 +7,45 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.mealplanning.R
 import com.example.mealplanning.databinding.FragmentInformationBinding
+import com.example.mealplanning.ui.menu_creator.Dish
+import com.example.mealplanning.viewModels.StudentViewModel
 
 class InformationFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = InformationFragment()
-    }
-
-    private lateinit var viewModel: InformationViewModel
-    private lateinit var _binding: FragmentInformationBinding
-    private val binding get() = _binding
+    private var _binding: FragmentInformationBinding?=null
+    private val viewModelStudent: StudentViewModel by activityViewModels<StudentViewModel>()
+    private val mBinding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentInformationBinding.inflate(inflater, container, false)
+        _binding=FragmentInformationBinding.inflate(inflater,container,false)
 
-        val dish = requireArguments().getString("nameDish")
+        mBinding.buttonGoBack.setOnClickListener {
+            parentFragmentManager.popBackStack()
+        }
 
-        binding.textView5.setText(dish)
+        val numberDish=viewModelStudent.getShowMore()
+        val dish=viewModelStudent.getDishFromChoice(numberDish)
+        mBinding.nameDish.text=dish.name
+        mBinding.ingredients.text=dish.ingredients
 
-        return binding.root
+
+        return mBinding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding=null
     }
 
 
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(InformationViewModel::class.java)
-        // TODO: Use the ViewModel
-    }
+
 
 }

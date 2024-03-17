@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="menu_creator.CalendarMenuCreator">
+    tools:context=".ui.menu_creator.CalendarMenuCreator">
 
     <TextView
         android:id="@+id/scheduleTV"
@@ -31,17 +31,18 @@
         app:layout_constraintTop_toBottomOf="@+id/scheduleTV" />
 
     <com.google.android.material.button.MaterialButton
-        android:backgroundTint="#EDEDED"
-        android:textAllCaps="false"
-        android:textColor="@color/black"
         android:id="@+id/button3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="64dp"
-        app:cornerRadius="50dp"
+        android:layout_marginBottom="100dp"
+        android:backgroundTint="#EDEDED"
         android:text="Выбрать блюдо 3"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        app:cornerRadius="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.button.MaterialButton
@@ -71,5 +72,16 @@
         app:layout_constraintBottom_toTopOf="@+id/button2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btn_confirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:text="Подтвердить"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
