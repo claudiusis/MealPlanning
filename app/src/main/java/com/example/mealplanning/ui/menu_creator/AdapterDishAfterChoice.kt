@@ -13,9 +13,10 @@ import com.example.mealplanning.R
 import com.example.mealplanning.databinding.DishViewHolderBinding
 import com.example.mealplanning.viewModels.CreatorViewModel
 
-class DishAdapter(
-    private val fragment: ChooseFoodFragment,
-    private val viewModelCreator: CreatorViewModel) : RecyclerView.Adapter<DishAdapter.MyViewHolder>() {
+class AdapterDishAfterChoice(
+    private val fragment: CalendarMenuCreator,
+    private val viewModelCreator:CreatorViewModel
+) : RecyclerView.Adapter<AdapterDishAfterChoice.AfterChoiceDishViewHolder>() {
 
 
     var notesList = listOf<Dish>()
@@ -27,29 +28,32 @@ class DishAdapter(
             diffResult.dispatchUpdatesTo(this)
         }
 
-
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AfterChoiceDishViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.dish_view_holder, parent, false)
-        return MyViewHolder(view)
+        return AfterChoiceDishViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: AfterChoiceDishViewHolder, position: Int) {
         holder.onBind(notesList[position])
         holder.mBinding.itemDish.setOnClickListener {
-            viewModelCreator.addSelectedDish(notesList.get(position),position)
-            fragment.findNavController().navigate(R.id.action_chooseFood_to_calendarMenuCreator)
+            viewModelCreator.setPositionChoice(position)
+            fragment.findNavController().navigate(R.id.action_calendarMenuCreator_to_chooseFood)
         }
+
     }
 
     override fun getItemCount()=notesList.size
 
-    class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+
+
+    class AfterChoiceDishViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
         private var _binding: DishViewHolderBinding
         val mBinding get()=_binding
 
         init {
-            _binding=DishViewHolderBinding.bind(itemView)
+            _binding= DishViewHolderBinding.bind(itemView)
         }
 
         private val imageView: ImageView = itemView.findViewById(R.id.imageDish)
@@ -60,5 +64,9 @@ class DishAdapter(
             nameDish.text=items.name
             descriptionDish.text=items.ingredients
         }
+
+
+
+
     }
 }

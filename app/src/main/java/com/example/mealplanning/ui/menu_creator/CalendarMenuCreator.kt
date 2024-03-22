@@ -1,6 +1,7 @@
 package com.example.mealplanning.ui.menu_creator
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -18,8 +19,7 @@ class CalendarMenuCreator : Fragment() {
 
     private var _binding: FragmentCalendarMenuCreatorBinding?=null
     private val viewModelCreator: CreatorViewModel by activityViewModels<CreatorViewModel>()
-    val recyclerView: RecyclerView = mBinding.chooseFoodRecyclerView
-    val data = listOf("Блюдо 1", "Блюдо 2", "Блюдо 3")
+    private lateinit var dishAfterChoiceRecyclerAdapter:AdapterDishAfterChoice
     private val mBinding get()=_binding!!
 
 
@@ -28,29 +28,18 @@ class CalendarMenuCreator : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding=FragmentCalendarMenuCreatorBinding.inflate(inflater, container, false)
-
         viewModelCreator.downLoadAllDish()
+        viewModelCreator.setSelectedDish(viewModelCreator.getListAfterChoice())
+
+
+        dishAfterChoiceRecyclerAdapter= AdapterDishAfterChoice(this,viewModelCreator)
+        mBinding.chooseFoodRecyclerView.layoutManager=LinearLayoutManager(requireContext())
+        mBinding.chooseFoodRecyclerView.adapter=dishAfterChoiceRecyclerAdapter
+        dishAfterChoiceRecyclerAdapter.notesList=viewModelCreator.getSelectedDish()
+        Log.d("FENIX","${dishAfterChoiceRecyclerAdapter.notesList}")
 
 
 
-        val adapter = EmptyDishAdapter(data)
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-
-
-
-
-        mBinding.chooseFoodRecyclerView.setOnClickListener {
-            findNavController().navigate(R.id.action_calendarMenuCreator_to_chooseFood)
-        }
-
-        mBinding.chooseFoodRecyclerView.setOnClickListener {
-            findNavController().navigate(R.id.action_calendarMenuCreator_to_chooseFood)
-        }
-
-        mBinding.chooseFoodRecyclerView.setOnClickListener {
-            findNavController().navigate(R.id.action_calendarMenuCreator_to_chooseFood)
-        }
 
 
         mBinding.btnConfirm.setOnClickListener {
