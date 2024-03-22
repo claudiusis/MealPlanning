@@ -55,6 +55,11 @@ class Repository {
                     dishForChoice.add(dish!!)
                 }
             }
+            else{
+                dishForChoice.add(Dish(0,"Будет скоро","Будет скоро"))
+                dishForChoice.add(Dish(1,"Будет скоро","Будет скоро"))
+                dishForChoice.add(Dish(2,"Будет скоро","Будет скоро"))
+            }
         }
     }
 
