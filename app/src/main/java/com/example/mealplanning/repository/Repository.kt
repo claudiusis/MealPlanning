@@ -38,7 +38,7 @@ class Repository {
 
 
     fun upLoadDishForChoice(listDish: ArrayList<Dish>){
-        database.child("Выбор").setValue(listDish)
+        database.child("Выбор/data").setValue(listDish)
     }
 
 
@@ -47,7 +47,7 @@ class Repository {
     }
 
     fun downLoadDishForChoice(){
-        database.child("Выбор").get().addOnSuccessListener {
+        database.child("Выбор").child("data").get().addOnSuccessListener {
             dishForChoice.clear()
             if(it.exists()){
                 for (dishs in it.children){
@@ -65,6 +65,9 @@ class Repository {
 
     fun getDishFromChoice(number:Int): Dish {
         return dishForChoice[number]
+    }
+    fun getListAfterChoice(): ArrayList<Dish> {
+        return dishForChoice
     }
 
 

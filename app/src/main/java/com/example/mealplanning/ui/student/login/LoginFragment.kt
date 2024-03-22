@@ -26,11 +26,12 @@ class LoginFragment : Fragment() {
         _binding=FragmentLoginBinding.inflate(inflater, container, false)
 
         viewModelCreator.addDish()
+        viewModelCreator.downLoadDishForChoice()
+
 
         mBinding.studentBtn.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_mainFragment)
         }
-
         mBinding.workerBtn.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_calendarMenuCreator)
         }

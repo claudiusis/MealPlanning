@@ -8,10 +8,32 @@ class CreatorViewModel: ViewModel() {
 
     private val repository=Repository()
 
-    private val selectedDish=ArrayList<Dish>()
+    private var selectedDish=ArrayList<Dish>()
+    private var positionChoice=0
 
-    fun addSelectedDish(dish: Dish){
-        selectedDish.add(dish)
+    fun getSelectedDish(): ArrayList<Dish> {
+        return selectedDish
+    }
+    fun setSelectedDish(list:ArrayList<Dish>){
+        selectedDish=list
+    }
+    fun getListAfterChoice(): ArrayList<Dish> {
+        return repository.getListAfterChoice()
+    }
+    fun getDishFromChoice(number:Int): Dish {
+        return repository.getDishFromChoice(number)
+    }
+    fun downLoadDishForChoice(){
+        repository.downLoadDishForChoice()
+    }
+    fun setPositionChoice(pos:Int){
+        positionChoice=pos
+    }
+    fun getPositionChoice(): Int {
+        return positionChoice
+    }
+    fun addSelectedDish(dish: Dish, pos: Int){
+        selectedDish[pos]=dish
     }
 
     fun upLoadSelectedDish(){
