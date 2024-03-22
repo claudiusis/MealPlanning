@@ -23,65 +23,35 @@
         android:id="@+id/calendarView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="64dp"
-        app:layout_constraintBottom_toTopOf="@+id/button1"
+        android:layout_marginTop="103dp"
+        app:layout_constraintBottom_toTopOf="@+id/choose_food_recycler_view"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scheduleTV" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/button3"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/choose_food_recycler_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="100dp"
-        android:backgroundTint="#EDEDED"
-        android:text="Выбрать блюдо 3"
-        android:textAllCaps="false"
-        android:textColor="@color/black"
-        app:cornerRadius="50dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="80dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.506"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/calendarView" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="#EDEDED"
-        android:text="Выбрать блюдо 2"
-        android:textAllCaps="false"
-        android:textColor="@color/black"
-        app:cornerRadius="50dp"
-        app:layout_constraintBottom_toTopOf="@+id/button3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#EDEDED"
-        android:text="Выбрать блюдо 1"
-        android:textAllCaps="false"
-        android:textColor="@color/black"
-        android:layout_marginBottom="16dp"
-        app:cornerRadius="50dp"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
         android:id="@+id/btn_confirm"
+        android:text="Подтвердить"
+        android:backgroundTint="#EDEDED"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:cornerRadius="50dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        android:text="Подтвердить"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button3" />
+        app:layout_constraintTop_toBottomOf="@+id/choose_food_recycler_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

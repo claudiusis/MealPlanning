@@ -14,7 +14,7 @@ import com.example.mealplanning.databinding.DishViewHolderBinding
 import com.example.mealplanning.viewModels.CreatorViewModel
 
 class DishAdapter(
-    private val fragment:ChooseFoodFragment,
+    private val fragment: ChooseFoodFragment,
     private val viewModelCreator: CreatorViewModel) : RecyclerView.Adapter<DishAdapter.MyViewHolder>() {
 
 

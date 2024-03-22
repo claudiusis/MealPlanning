@@ -7,8 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.mealplanning.R
 import com.example.mealplanning.databinding.FragmentChooseFoodBinding
 import com.example.mealplanning.viewModels.CreatorViewModel
 
