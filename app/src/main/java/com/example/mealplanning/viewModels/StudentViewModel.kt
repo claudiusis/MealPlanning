@@ -1,5 +1,6 @@
 package com.example.mealplanning.viewModels
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.mealplanning.repository.Repository
 import com.example.mealplanning.ui.menu_creator.Dish
@@ -10,7 +11,17 @@ class StudentViewModel:ViewModel() {
 
     private var showMore:Int=0
 
+    private var dateCalendarStudent="w"
+    private var positionChoice=0
 
+
+
+    fun setPositionChoice(pos:Int){
+        positionChoice=pos
+    }
+    fun getPositionChoice(): Int {
+        return positionChoice
+    }
     fun setShowMore(number:Int){
         showMore=number
     }
@@ -22,8 +33,32 @@ class StudentViewModel:ViewModel() {
         return repository.getDishFromChoice(number)
     }
 
-    fun downLoadDishForChoice(){
-        repository.downLoadDishForChoice("data")
+    fun downLoadDishForChoice(date : String){
+        repository.downLoadDishForChoice(date)
     }
+
+    fun downLoadMyChoice(){
+        repository.downLoadMyChoice(dateCalendarStudent)
+    }
+
+    fun getStudentDishLive(): MutableLiveData<ArrayList<Dish>> {
+        return repository.getStudentDishLive()
+    }
+
+    fun getDateCalendar(): String {
+        return dateCalendarStudent
+    }
+
+    fun setDateCalendar(date:String){
+        dateCalendarStudent=date
+    }
+
+    fun getDishForChoice(): MutableLiveData<ArrayList<Dish>> {
+        return repository.getListAfterChoiceLive()
+    }
+    fun replaceDishForChoice(pos : Int, dish: Dish){
+        repository.replaceDishForChoiceStudent(pos, dish)
+    }
+
 
 }
