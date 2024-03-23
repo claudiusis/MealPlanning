@@ -11,6 +11,13 @@ class CreatorViewModel: ViewModel() {
     private var selectedDish=ArrayList<Dish>()
     private var positionChoice=0
 
+    private var dateCalendarMenuCreator=""
+
+
+    fun setDateCalendar(date :String){
+        dateCalendarMenuCreator=date
+    }
+
     fun getSelectedDish(): ArrayList<Dish> {
         return selectedDish
     }
@@ -37,7 +44,7 @@ class CreatorViewModel: ViewModel() {
     }
 
     fun upLoadSelectedDish(){
-        repository.upLoadDishForChoice(selectedDish)
+        repository.upLoadDishForChoice(selectedDish, dateCalendarMenuCreator)
     }
 
     fun addDish(){

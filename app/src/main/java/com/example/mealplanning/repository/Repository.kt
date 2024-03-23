@@ -37,8 +37,8 @@ class Repository {
     }
 
 
-    fun upLoadDishForChoice(listDish: ArrayList<Dish>){
-        database.child("Выбор/data").setValue(listDish)
+    fun upLoadDishForChoice(listDish: ArrayList<Dish>, date:String){
+        database.child("Выбор/$date").setValue(listDish)
     }
 
 

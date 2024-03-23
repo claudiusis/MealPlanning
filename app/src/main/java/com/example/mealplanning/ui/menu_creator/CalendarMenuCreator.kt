@@ -1,5 +1,6 @@
 package com.example.mealplanning.ui.menu_creator
 
+import android.icu.util.Calendar
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -30,6 +31,19 @@ class CalendarMenuCreator : Fragment() {
         _binding=FragmentCalendarMenuCreatorBinding.inflate(inflater, container, false)
         viewModelCreator.downLoadAllDish()
         viewModelCreator.setSelectedDish(viewModelCreator.getListAfterChoice())
+
+        val calendar=Calendar.getInstance()
+        val currentDay = calendar.get(Calendar.DAY_OF_MONTH)
+        val currentMonth = calendar.get(Calendar.MONTH) + 1 // Месяцы в Calendar начинаются с 0
+        val currentYear = calendar.get(Calendar.YEAR)
+        viewModelCreator.setDateCalendar("$currentDay/$currentMonth/$currentYear")
+
+
+        val calendarView=mBinding.calendarView
+        calendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
+            val selectedDate = "$dayOfMonth/${month + 1}/$year"
+            viewModelCreator.setDateCalendar(selectedDate)
+        }
 
 
         dishAfterChoiceRecyclerAdapter= AdapterDishAfterChoice(this,viewModelCreator)
