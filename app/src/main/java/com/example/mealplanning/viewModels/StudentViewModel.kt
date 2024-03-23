@@ -23,7 +23,7 @@ class StudentViewModel:ViewModel() {
     }
 
     fun downLoadDishForChoice(){
-        repository.downLoadDishForChoice()
+        repository.downLoadDishForChoice("data")
     }
 
 }

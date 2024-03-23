@@ -37,7 +37,8 @@ class DishAdapter(
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.onBind(notesList[position])
         holder.mBinding.itemDish.setOnClickListener {
-            viewModelCreator.addSelectedDish(notesList.get(position),viewModelCreator.getPositionChoice())
+            viewModelCreator.replaceDishForChoice(viewModelCreator.getPositionChoice(),notesList[position])
+//            viewModelCreator.addSelectedDish(notesList.get(position),viewModelCreator.getPositionChoice())
             fragment.findNavController().navigate(R.id.action_chooseFood_to_calendarMenuCreator)
         }
     }

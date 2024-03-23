@@ -1,5 +1,6 @@
 package com.example.mealplanning.ui.student.login
 
+import android.icu.util.Calendar
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -27,7 +28,11 @@ class LoginFragment : Fragment() {
 
         viewModelCreator.addDish()
         viewModelCreator.downLoadDishForChoice()
-
+        val calendar=Calendar.getInstance()
+        val currentDay = calendar.get(Calendar.DAY_OF_MONTH)
+        val currentMonth = calendar.get(Calendar.MONTH) + 1 // Месяцы в Calendar начинаются с 0
+        val currentYear = calendar.get(Calendar.YEAR)
+        viewModelCreator.setDateCalendar("${currentDay}d${currentMonth}m${currentYear}y")
 
         mBinding.studentBtn.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_mainFragment)

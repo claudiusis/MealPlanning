@@ -1,5 +1,6 @@
 package com.example.mealplanning.viewModels
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.mealplanning.repository.Repository
 import com.example.mealplanning.ui.menu_creator.Dish
@@ -11,11 +12,18 @@ class CreatorViewModel: ViewModel() {
     private var selectedDish=ArrayList<Dish>()
     private var positionChoice=0
 
-    private var dateCalendarMenuCreator=""
+    private var dateCalendarMenuCreator="w"
 
+    fun replaceDishForChoice(pos : Int, dish: Dish){
+        repository.replaceDishForChoice(pos, dish)
+    }
 
     fun setDateCalendar(date :String){
         dateCalendarMenuCreator=date
+    }
+
+    fun getDateCalendar(): String {
+        return dateCalendarMenuCreator
     }
 
     fun getSelectedDish(): ArrayList<Dish> {
@@ -24,14 +32,14 @@ class CreatorViewModel: ViewModel() {
     fun setSelectedDish(list:ArrayList<Dish>){
         selectedDish=list
     }
-    fun getListAfterChoice(): ArrayList<Dish> {
-        return repository.getListAfterChoice()
+    fun getListAfterChoiceLive(): MutableLiveData<ArrayList<Dish>> {
+        return repository.getListAfterChoiceLive()
     }
     fun getDishFromChoice(number:Int): Dish {
         return repository.getDishFromChoice(number)
     }
     fun downLoadDishForChoice(){
-        repository.downLoadDishForChoice()
+        repository.downLoadDishForChoice(dateCalendarMenuCreator)
     }
     fun setPositionChoice(pos:Int){
         positionChoice=pos
@@ -44,7 +52,7 @@ class CreatorViewModel: ViewModel() {
     }
 
     fun upLoadSelectedDish(){
-        repository.upLoadDishForChoice(selectedDish, dateCalendarMenuCreator)
+        repository.upLoadDishForChoice(dateCalendarMenuCreator)
     }
 
     fun addDish(){

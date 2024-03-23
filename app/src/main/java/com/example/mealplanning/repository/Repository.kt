@@ -1,5 +1,7 @@
 package com.example.mealplanning.repository
 
+import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import com.example.mealplanning.ui.menu_creator.Dish
 import com.google.firebase.database.getValue
 import com.google.firebase.database.ktx.database
@@ -17,7 +19,8 @@ class Repository {
 
     private val studentChoice=ArrayList<Dish>()
 
-    private val dishForChoice=ArrayList<Dish>()
+    private val dishForChoiceLive:MutableLiveData<ArrayList<Dish>> by lazy { MutableLiveData<ArrayList<Dish>>() }
+    private val dishForChoiceCopy=ArrayList<Dish>()
 
     fun downLoadAllDish(){
         database.child("dish").get().addOnSuccessListener {
@@ -37,8 +40,8 @@ class Repository {
     }
 
 
-    fun upLoadDishForChoice(listDish: ArrayList<Dish>, date:String){
-        database.child("Выбор/$date").setValue(listDish)
+    fun upLoadDishForChoice(date:String){
+        database.child("Выбор/$date").setValue(dishForChoiceCopy)
     }
 
 
@@ -46,28 +49,35 @@ class Repository {
         database.child("dish").setValue(allDish)
     }
 
-    fun downLoadDishForChoice(){
-        database.child("Выбор").child("data").get().addOnSuccessListener {
-            dishForChoice.clear()
+    fun downLoadDishForChoice(date:String){
+        Log.d("FENIX",date)
+        database.child("Выбор").child(date).get().addOnSuccessListener {
+            dishForChoiceCopy.clear()
             if(it.exists()){
                 for (dishs in it.children){
                     val dish=dishs.getValue(Dish::class.java)
-                    dishForChoice.add(dish!!)
+                    dishForChoiceCopy.add(dish!!)
+                    dishForChoiceLive.postValue(dishForChoiceCopy)
                 }
             }
             else{
-                dishForChoice.add(Dish(0,"Будет скоро","Будет скоро"))
-                dishForChoice.add(Dish(1,"Будет скоро","Будет скоро"))
-                dishForChoice.add(Dish(2,"Будет скоро","Будет скоро"))
+                dishForChoiceCopy.add(Dish(100,"Будет скоро","Будет скоро"))
+                dishForChoiceCopy.add(Dish(101,"Будет скоро","Будет скоро"))
+                dishForChoiceCopy.add(Dish(102,"Будет скоро","Будет скоро"))
+                dishForChoiceLive.postValue(dishForChoiceCopy)
             }
         }
     }
 
     fun getDishFromChoice(number:Int): Dish {
-        return dishForChoice[number]
+        return dishForChoiceLive.value!![number]
     }
-    fun getListAfterChoice(): ArrayList<Dish> {
-        return dishForChoice
+    fun getListAfterChoiceLive(): MutableLiveData<ArrayList<Dish>> {
+        return dishForChoiceLive
+    }
+    fun replaceDishForChoice(pos :Int, dish: Dish){
+        dishForChoiceCopy[pos]=dish
+        dishForChoiceLive.postValue(dishForChoiceCopy)
     }
 
 
