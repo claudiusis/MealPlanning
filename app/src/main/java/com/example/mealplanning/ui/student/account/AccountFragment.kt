@@ -25,7 +25,7 @@ class AccountFragment : Fragment() {
     ): View {
         _binding = FragmentAccountStudentBinding.inflate(inflater, container, false)
 
-        viewModelStudent.downLoadDishForChoice()
+        viewModelStudent.downLoadDishForChoice("date")
         return mBinding.root
     }
 
