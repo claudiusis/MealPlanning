@@ -12,10 +12,21 @@
         <action
             android:id="@+id/action_menuFragment_to_informationFragment"
             app:destination="@id/informationFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_studentMakeChoiceFragment"
+            app:destination="@id/studentMakeChoiceFragment" />
     </fragment>
     <fragment
         android:id="@+id/informationFragment"
         android:name="com.example.mealplanning.ui.student.menu.InformationFragment"
         android:label="fragment_information"
         tools:layout="@layout/fragment_information" />
+    <fragment
+        android:id="@+id/studentMakeChoiceFragment"
+        android:name="com.example.mealplanning.ui.student.menu.StudentMakeChoiceFragment"
+        android:label="StudentMakeChoiceFragment" >
+        <action
+            android:id="@+id/action_studentMakeChoiceFragment_to_menuFragment"
+            app:destination="@id/menuFragment" />
+    </fragment>
 </navigation>

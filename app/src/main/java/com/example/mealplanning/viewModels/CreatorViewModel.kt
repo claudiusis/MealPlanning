@@ -15,7 +15,7 @@ class CreatorViewModel: ViewModel() {
     private var dateCalendarMenuCreator="w"
 
     fun replaceDishForChoice(pos : Int, dish: Dish){
-        repository.replaceDishForChoice(pos, dish)
+        repository.replaceDishForChoiceCreator(pos, dish)
     }
 
     fun setDateCalendar(date :String){
@@ -39,7 +39,7 @@ class CreatorViewModel: ViewModel() {
         return repository.getDishFromChoice(number)
     }
     fun downLoadDishForChoice(){
-        repository.downLoadDishForChoice(dateCalendarMenuCreator)
+        repository.downLoadDishForChoiceCreator(dateCalendarMenuCreator)
     }
     fun setPositionChoice(pos:Int){
         positionChoice=pos
