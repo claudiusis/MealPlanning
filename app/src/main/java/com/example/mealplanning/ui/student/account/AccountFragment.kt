@@ -6,33 +6,27 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.mealplanning.databinding.FragmentAccountStudentBinding
+import com.example.mealplanning.viewModels.StudentViewModel
 
 class AccountFragment : Fragment() {
 
     private var _binding: FragmentAccountStudentBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
+    private val viewModelStudent: StudentViewModel by activityViewModels<StudentViewModel>()
+    private val mBinding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
-            ViewModelProvider(this)[AccountViewModel::class.java]
-
         _binding = FragmentAccountStudentBinding.inflate(inflater, container, false)
-  /*      val root: View = binding.root
 
-        val textView: TextView = binding.textHome
-        homeViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        } */
-        return _binding!!.root
+        viewModelStudent.downLoadDishForChoice()
+        return mBinding.root
     }
 
     override fun onDestroyView() {
