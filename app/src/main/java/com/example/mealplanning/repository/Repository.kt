@@ -86,9 +86,9 @@ class Repository {
                 }
             }
             else{
-                dishForChoiceCopy.add(Dish(10000,"Выберитe блюдо","Выберитe блюдо"))
-                dishForChoiceCopy.add(Dish(10001,"Выберитe блюдо","Выберитe блюдо"))
-                dishForChoiceCopy.add(Dish(10002,"Выберитe блюдо","Выберитe блюдо"))
+                dishForChoiceCopy.add(Dish(10000,"Выберите блюдо","Выберите блюдо"))
+                dishForChoiceCopy.add(Dish(10001,"Выберите блюдо","Выберите блюдо"))
+                dishForChoiceCopy.add(Dish(10002,"Выберите блюдо","Выберите блюдо"))
                 dishForChoiceLive.postValue(dishForChoiceCopy)
             }
         }
