@@ -44,6 +44,10 @@ class AdapterDishAfterChoice(
 
         if(holder.mBinding.textNameDish.text.equals("Выберите блюдо")) {
             holder.mBinding.infoButton.visibility = View.GONE
+
+        }
+        else {
+            holder.mBinding.infoButton.visibility = View.VISIBLE
         }
 
 
@@ -54,8 +58,8 @@ class AdapterDishAfterChoice(
         }
 
         holder.mBinding.infoButton.setOnClickListener() {
-            //viewModelCreator.setPositionChoice(position)
-            fragment.findNavController().navigate(R.id.action_calendarMenuCreator_to_informationFragment2)
+            viewModelCreator.setPositionChoice(100 + position)
+            fragment.findNavController().navigate(R.id.action_calendarMenuCreator_to_informationCreatorFragment)
         }
 
     }

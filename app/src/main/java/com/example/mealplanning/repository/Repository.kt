@@ -39,6 +39,10 @@ class Repository {
         }
     }
 
+    fun getFromAllDish(number: Int) : Dish {
+        return allDish[number]
+    }
+
     fun getAllDishList(): ArrayList<Dish> {
         return allDish
     }

@@ -14,6 +14,10 @@ class CreatorViewModel: ViewModel() {
 
     private var dateCalendarMenuCreator="w"
 
+
+    fun getFromAllDish(number: Int): Dish {
+        return repository.getFromAllDish(number)
+    }
     fun replaceDishForChoice(pos : Int, dish: Dish){
         repository.replaceDishForChoiceCreator(pos, dish)
     }
