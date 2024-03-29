@@ -6,9 +6,10 @@
 
     <ImageView
         android:id="@+id/imageDish"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:src="" />
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginBottom="4dp"
+        android:src="@drawable/ic_launcher_background" />
 
     <LinearLayout
         android:layout_width="0dp"
