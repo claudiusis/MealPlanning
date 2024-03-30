@@ -39,6 +39,10 @@ class Repository {
         }
     }
 
+    fun getFromAllDish(number: Int) : Dish {
+        return allDish[number]
+    }
+
     fun getAllDishList(): ArrayList<Dish> {
         return allDish
     }
@@ -86,9 +90,15 @@ class Repository {
                 }
             }
             else{
+<<<<<<< HEAD
                 dishForChoiceCopy.add(Dish(10000,"Выберите блюдо","Выберитe блюдо"))
                 dishForChoiceCopy.add(Dish(10001,"Выберите блюдо","Выберитe блюдо"))
                 dishForChoiceCopy.add(Dish(10002,"Выберите блюдо","Выберитe блюдо"))
+=======
+                dishForChoiceCopy.add(Dish(10000,"Выберите блюдо","Выберите блюдо"))
+                dishForChoiceCopy.add(Dish(10001,"Выберите блюдо","Выберите блюдо"))
+                dishForChoiceCopy.add(Dish(10002,"Выберите блюдо","Выберите блюдо"))
+>>>>>>> 500ce8aa4a6e9054a71b151515d7673cf7446c23
                 dishForChoiceLive.postValue(dishForChoiceCopy)
             }
         }

@@ -28,6 +28,9 @@ class AdapterDishAfterChoice(
             field = value
             val diffResult = DiffUtil.calculateDiff(callback)
             diffResult.dispatchUpdatesTo(this)
+
+
+
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AfterChoiceDishViewHolder {
@@ -38,9 +41,28 @@ class AdapterDishAfterChoice(
     override fun onBindViewHolder(holder: AfterChoiceDishViewHolder, position: Int) {
         holder.onBind(notesList[position])
 
+<<<<<<< HEAD
+=======
+
+        if(holder.mBinding.textNameDish.text.equals("Выберите блюдо")) {
+            holder.mBinding.infoButton.visibility = View.GONE
+
+        }
+        else {
+            holder.mBinding.infoButton.visibility = View.VISIBLE
+        }
+
+
+
+>>>>>>> 500ce8aa4a6e9054a71b151515d7673cf7446c23
         holder.mBinding.itemDish.setOnClickListener {
             viewModelCreator.setPositionChoice(position)
             fragment.findNavController().navigate(R.id.action_calendarMenuCreator_to_chooseFood)
+        }
+
+        holder.mBinding.infoButton.setOnClickListener() {
+            viewModelCreator.setPositionChoice(position + 100)
+            fragment.findNavController().navigate(R.id.action_calendarMenuCreator_to_informationCreatorFragment)
         }
 
     }
@@ -62,21 +84,25 @@ class AdapterDishAfterChoice(
         private val imageView: ImageView = itemView.findViewById(R.id.imageDish)
         private val nameDish: TextView = itemView.findViewById(R.id.textNameDish)
         private val descriptionDish: TextView = itemView.findViewById(R.id.textDescriptionDish)
+<<<<<<< HEAD
         private val infoBtn : ImageButton = itemView.findViewById(R.id.infoButton)
 
+=======
+        private val infoBtn: ImageButton = itemView.findViewById(R.id.infoButton)
+>>>>>>> 500ce8aa4a6e9054a71b151515d7673cf7446c23
         fun onBind(items:Dish){
             nameDish.text=items.name
             descriptionDish.text=items.ingredients
 
+<<<<<<< HEAD
             if (nameDish.text.toString()=="Выберите блюдо"){
                 infoBtn.visibility = View.GONE
             } else {
                 infoBtn.visibility = View.VISIBLE
             }
+=======
+>>>>>>> 500ce8aa4a6e9054a71b151515d7673cf7446c23
         }
-
-
-
 
     }
 }

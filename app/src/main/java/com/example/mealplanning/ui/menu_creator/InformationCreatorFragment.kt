@@ -1,48 +1,45 @@
-package com.example.mealplanning.ui.student.menu
+package com.example.mealplanning.ui.menu_creator
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.addCallback
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
-import com.example.mealplanning.R
 import com.example.mealplanning.databinding.FragmentInformationBinding
-import com.example.mealplanning.ui.menu_creator.Dish
+import com.example.mealplanning.viewModels.CreatorViewModel
 import com.example.mealplanning.viewModels.StudentViewModel
 
-class InformationFragment : Fragment() {
+class InformationCreatorFragment : Fragment() {
+
 
     private var _binding: FragmentInformationBinding?=null
-    private val viewModelStudent: StudentViewModel by activityViewModels<StudentViewModel>()
+    private val viewModelCreator: CreatorViewModel by activityViewModels<CreatorViewModel>()
     private val mBinding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding=FragmentInformationBinding.inflate(inflater,container,false)
+        _binding= FragmentInformationBinding.inflate(inflater,container,false)
 
         mBinding.buttonGoBack.setOnClickListener {
             parentFragmentManager.popBackStack()
         }
 
-        val numberDish=viewModelStudent.getPositionChoice()
-
+        val numberDish=viewModelCreator.getPositionChoice()
 
         lateinit var dish : Dish
         if(numberDish >= 100) {
-            dish = viewModelStudent.getDishFromChoice(numberDish - 100)
+            dish = viewModelCreator.getDishFromChoice(numberDish - 100)
         }
         else {
-            dish = viewModelStudent.getFromAllDish(numberDish)
+            dish = viewModelCreator.getFromAllDish(numberDish)
         }
 
 
-
+        Log.d("QWERTY", numberDish.toString())
         mBinding.nameDish.text=dish.name
         mBinding.ingredients.text=dish.ingredients
 
