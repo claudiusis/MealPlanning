@@ -30,7 +30,7 @@ class InformationFragment : Fragment() {
             parentFragmentManager.popBackStack()
         }
 
-        val numberDish=viewModelStudent.getShowMore()
+        val numberDish=viewModelStudent.getPositionChoice()
 
 
         lateinit var dish : Dish

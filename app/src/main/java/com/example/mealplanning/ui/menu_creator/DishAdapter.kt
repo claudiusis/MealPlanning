@@ -70,7 +70,6 @@ class DishAdapter(
         private val imageView: ImageView = itemView.findViewById(R.id.imageDish)
         private val nameDish: TextView = itemView.findViewById(R.id.textNameDish)
         private val descriptionDish: TextView = itemView.findViewById(R.id.textDescriptionDish)
-        private val infoBtn: ImageButton = itemView.findViewById(R.id.infoButton)
         fun onBind(items:Dish){
             nameDish.text=items.name
             descriptionDish.text=items.ingredients

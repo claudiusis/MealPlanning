@@ -39,7 +39,8 @@ class AdapterStudentMakeChoice(
         if(holder.mBinding.textNameDish.text.equals("Выберите первое") ||
             holder.mBinding.textNameDish.text.equals("Выберите второе") ||
             holder.mBinding.textNameDish.text.equals("Выберите третье") ||
-            holder.mBinding.textNameDish.text.equals("Будет скоро")) {
+            holder.mBinding.textNameDish.text.equals("Будет скоро") ||
+            holder.mBinding.textNameDish.text.equals("Выберите блюдо")) {
             holder.mBinding.infoButton.visibility = View.GONE
 
         }
