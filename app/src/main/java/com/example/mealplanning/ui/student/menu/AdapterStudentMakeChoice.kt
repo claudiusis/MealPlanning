@@ -35,9 +35,26 @@ class AdapterStudentMakeChoice(
 
     override fun onBindViewHolder(holder: StudentMakeChoiceViewHolder, position: Int) {
         holder.onBind(notesList[position])
+
+        if(holder.mBinding.textNameDish.text.equals("Выберите первое") ||
+            holder.mBinding.textNameDish.text.equals("Выберите второе") ||
+            holder.mBinding.textNameDish.text.equals("Выберите третье") ||
+            holder.mBinding.textNameDish.text.equals("Будет скоро")) {
+            holder.mBinding.infoButton.visibility = View.GONE
+
+        }
+        else {
+            holder.mBinding.infoButton.visibility = View.VISIBLE
+        }
+
+
         holder.mBinding.itemDish.setOnClickListener {
             viewModelStudent.replaceDishForChoice(viewModelStudent.getPositionChoice(),notesList[position])
             fragment.findNavController().navigate(R.id.action_studentMakeChoiceFragment_to_menuFragment)
+        }
+        holder.mBinding.infoButton.setOnClickListener() {
+            viewModelStudent.setPositionChoice(position)
+            fragment.findNavController().navigate(R.id.action_studentMakeChoiceFragment_to_informationFragment)
         }
 
     }

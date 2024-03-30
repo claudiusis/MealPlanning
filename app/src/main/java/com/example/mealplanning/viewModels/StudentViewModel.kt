@@ -16,10 +16,14 @@ class StudentViewModel:ViewModel() {
 
 
 
+    fun getFromAllDish(number: Int): Dish {
+        return repository.getFromAllDish(number)
+    }
     fun setPositionChoice(pos:Int){
         positionChoice=pos
     }
     fun getPositionChoice(): Int {
+
         return positionChoice
     }
     fun setShowMore(number:Int){

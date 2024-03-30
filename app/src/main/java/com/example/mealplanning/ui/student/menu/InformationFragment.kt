@@ -31,7 +31,18 @@ class InformationFragment : Fragment() {
         }
 
         val numberDish=viewModelStudent.getShowMore()
-        val dish=viewModelStudent.getDishFromChoice(numberDish)
+
+
+        lateinit var dish : Dish
+        if(numberDish >= 100) {
+            dish = viewModelStudent.getDishFromChoice(numberDish - 100)
+        }
+        else {
+            dish = viewModelStudent.getFromAllDish(numberDish)
+        }
+
+
+
         mBinding.nameDish.text=dish.name
         mBinding.ingredients.text=dish.ingredients
 

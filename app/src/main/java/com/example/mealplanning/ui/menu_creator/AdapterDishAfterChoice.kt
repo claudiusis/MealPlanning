@@ -58,7 +58,7 @@ class AdapterDishAfterChoice(
         }
 
         holder.mBinding.infoButton.setOnClickListener() {
-            viewModelCreator.setPositionChoice(100 + position)
+            viewModelCreator.setPositionChoice(position + 100)
             fragment.findNavController().navigate(R.id.action_calendarMenuCreator_to_informationCreatorFragment)
         }
 

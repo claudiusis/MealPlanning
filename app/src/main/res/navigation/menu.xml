@@ -28,5 +28,8 @@
         <action
             android:id="@+id/action_studentMakeChoiceFragment_to_menuFragment"
             app:destination="@id/menuFragment" />
+        <action
+            android:id="@+id/action_studentMakeChoiceFragment_to_informationFragment"
+            app:destination="@id/informationFragment" />
     </fragment>
 </navigation>
