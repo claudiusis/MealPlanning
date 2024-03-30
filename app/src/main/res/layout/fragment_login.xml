@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.start.StartFragment"
-    android:id="@+id/startFragment"
+    android:id="@+id/login_fragment"
     >
 
 
@@ -39,7 +39,6 @@
 
 
     <com.google.android.material.button.MaterialButton
-        android:textAllCaps="false"
         android:backgroundTint="#EDEDED"
         android:textColor="@color/black"
         android:textStyle="bold"
@@ -55,7 +54,6 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/parentBtn"
-        android:textAllCaps="false"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -70,7 +68,6 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/workerBtn"
-        android:textAllCaps="false"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
