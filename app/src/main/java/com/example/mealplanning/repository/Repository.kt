@@ -2,10 +2,12 @@ package com.example.mealplanning.repository
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.example.mealplanning.ui.admin.AccountsData
 import com.example.mealplanning.ui.menu_creator.Dish
-import com.google.firebase.database.getValue
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import java.text.SimpleDateFormat
+import java.util.Date
 
 class Repository {
 
@@ -25,6 +27,10 @@ class Repository {
     private val dishStudentForChoiceLive:MutableLiveData<ArrayList<Dish>> by lazy {MutableLiveData<ArrayList<Dish>>()}
     private val dishStudentLive:MutableLiveData<ArrayList<Dish>> by lazy { MutableLiveData<ArrayList<Dish>>() }
     private val dishStudentCopyList=ArrayList<Dish>()
+
+
+    private val allAccountsLive : MutableLiveData<ArrayList<AccountsData>> by lazy {MutableLiveData<ArrayList<AccountsData>>()}
+    private val allAccountsCopy=ArrayList<AccountsData>()
 
     fun downLoadAllDish(){
         database.child("dish").get().addOnSuccessListener {
@@ -135,6 +141,43 @@ class Repository {
     fun getStudentDishLive(): MutableLiveData<ArrayList<Dish>> {
         return dishStudentLive
     }
+
+
+
+
+
+
+    //ФУНКЦИОНАЛ АДМИНА
+
+    //ЗАГРУЗКА ВСЕХ АККАУНТОВ
+
+    fun downLoadAllAccounts(){
+        database.child("Accounts").get().addOnSuccessListener {
+            allAccountsCopy.clear()
+            if(it.exists()) {
+                for (accounts in it.children) {
+                    val acc=accounts.getValue(AccountsData::class.java)
+                    allAccountsCopy.add(acc!!)
+                    allAccountsLive.postValue(allAccountsCopy)
+                    Log.d("RRR", allAccountsCopy.toString())
+                }
+            }
+        }
+    }
+
+    fun getAllAccountsCopy(): ArrayList<AccountsData> {
+        return allAccountsCopy
+    }
+
+    fun createAccount(account: AccountsData){
+        val sdf= SimpleDateFormat("yyyMMddHHmmss")
+        val id=sdf.format(Date())
+        account.id=id.toLong()
+        allAccountsCopy.add(0,account)
+        Firebase.database.getReference("Accounts/${account.id}").setValue(account)
+    }
+
+
 
 
 }
