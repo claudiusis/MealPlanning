@@ -1,9 +1,13 @@
 package com.example.mealplanning.repository
 
+import android.util.Log
+import androidx.lifecycle.MutableLiveData
+import com.example.mealplanning.ui.admin.AccountsData
 import com.example.mealplanning.ui.menu_creator.Dish
-import com.google.firebase.database.getValue
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import java.text.SimpleDateFormat
+import java.util.Date
 
 class Repository {
 
@@ -17,7 +21,16 @@ class Repository {
 
     private val studentChoice=ArrayList<Dish>()
 
-    private val dishForChoice=ArrayList<Dish>()
+    private val dishForChoiceLive:MutableLiveData<ArrayList<Dish>> by lazy { MutableLiveData<ArrayList<Dish>>() }
+    private val dishForChoiceCopy=ArrayList<Dish>()
+
+    private val dishStudentForChoiceLive:MutableLiveData<ArrayList<Dish>> by lazy {MutableLiveData<ArrayList<Dish>>()}
+    private val dishStudentLive:MutableLiveData<ArrayList<Dish>> by lazy { MutableLiveData<ArrayList<Dish>>() }
+    private val dishStudentCopyList=ArrayList<Dish>()
+
+
+    private val allAccountsLive : MutableLiveData<ArrayList<AccountsData>> by lazy {MutableLiveData<ArrayList<AccountsData>>()}
+    private val allAccountsCopy=ArrayList<AccountsData>()
 
     fun downLoadAllDish(){
         database.child("dish").get().addOnSuccessListener {
@@ -37,8 +50,8 @@ class Repository {
     }
 
 
-    fun upLoadDishForChoice(listDish: ArrayList<Dish>){
-        database.child("Выбор/data").setValue(listDish)
+    fun upLoadDishForChoice(date:String){
+        database.child("Выбор/$date").setValue(dishForChoiceCopy)
     }
 
 
@@ -46,28 +59,122 @@ class Repository {
         database.child("dish").setValue(allDish)
     }
 
-    fun downLoadDishForChoice(){
-        database.child("Выбор").child("data").get().addOnSuccessListener {
-            dishForChoice.clear()
+    fun downLoadDishForChoice(date:String){
+        Log.d("FENIX",date)
+        database.child("Выбор").child(date).get().addOnSuccessListener {
+            dishForChoiceCopy.clear()
             if(it.exists()){
                 for (dishs in it.children){
                     val dish=dishs.getValue(Dish::class.java)
-                    dishForChoice.add(dish!!)
+                    dishForChoiceCopy.add(dish!!)
+                    dishForChoiceLive.postValue(dishForChoiceCopy)
                 }
             }
             else{
-                dishForChoice.add(Dish(0,"Будет скоро","Будет скоро"))
-                dishForChoice.add(Dish(1,"Будет скоро","Будет скоро"))
-                dishForChoice.add(Dish(2,"Будет скоро","Будет скоро"))
+                dishForChoiceCopy.add(Dish(100,"Будет скоро","Будет скоро"))
+                dishForChoiceCopy.add(Dish(101,"Будет скоро","Будет скоро"))
+                dishForChoiceCopy.add(Dish(102,"Будет скоро","Будет скоро"))
+                dishForChoiceLive.postValue(dishForChoiceCopy)
+            }
+        }
+    }
+
+
+    fun downLoadDishForChoiceCreator(date:String){
+        Log.d("FENIX",date)
+        database.child("Выбор").child(date).get().addOnSuccessListener {
+            dishForChoiceCopy.clear()
+            if(it.exists()){
+                for (dishs in it.children){
+                    val dish=dishs.getValue(Dish::class.java)
+                    dishForChoiceCopy.add(dish!!)
+                    dishForChoiceLive.postValue(dishForChoiceCopy)
+                }
+            }
+            else{
+                dishForChoiceCopy.add(Dish(10000,"Выберитe блюдо","Выберитe блюдо"))
+                dishForChoiceCopy.add(Dish(10001,"Выберитe блюдо","Выберитe блюдо"))
+                dishForChoiceCopy.add(Dish(10002,"Выберитe блюдо","Выберитe блюдо"))
+                dishForChoiceLive.postValue(dishForChoiceCopy)
             }
         }
     }
 
     fun getDishFromChoice(number:Int): Dish {
-        return dishForChoice[number]
+        return dishForChoiceLive.value!![number]
     }
-    fun getListAfterChoice(): ArrayList<Dish> {
-        return dishForChoice
+    fun getListAfterChoiceLive(): MutableLiveData<ArrayList<Dish>> {
+        return dishForChoiceLive
+    }
+    fun replaceDishForChoiceStudent(pos :Int, dish: Dish){
+        dishStudentCopyList[pos]=dish
+        dishStudentLive.postValue(dishStudentCopyList)
+    }
+    fun replaceDishForChoiceCreator(pos:Int,dish: Dish){
+        dishForChoiceCopy[pos]=dish
+        dishForChoiceLive.postValue(dishForChoiceCopy)
+    }
+
+
+    //ЛОГИКА ШКОЛЬНИКА
+
+    fun downLoadMyChoice(date:String){
+        Log.d("FENIX",date)
+        database.child("ВыборШкольника").child(date).get().addOnSuccessListener {
+            dishStudentCopyList.clear()
+            if(it.exists()){
+                for (dishs in it.children){
+                    val dish=dishs.getValue(Dish::class.java)
+                    dishStudentCopyList.add(dish!!)
+                    dishStudentLive.postValue(dishForChoiceCopy)
+                }
+            }
+            else{
+                dishStudentCopyList.add(Dish(1000,"Выберите первое","Выберите первое"))
+                dishStudentCopyList.add(Dish(1001,"Выберите второе","Выберите второе"))
+                dishStudentCopyList.add(Dish(1002,"Выберите третье","Выберите третье"))
+                dishStudentLive.postValue(dishStudentCopyList)
+            }
+        }
+    }
+
+    fun getStudentDishLive(): MutableLiveData<ArrayList<Dish>> {
+        return dishStudentLive
+    }
+
+
+
+
+
+
+    //ФУНКЦИОНАЛ АДМИНА
+
+    //ЗАГРУЗКА ВСЕХ АККАУНТОВ
+
+    fun downLoadAllAccounts(){
+        database.child("Accounts").get().addOnSuccessListener {
+            allAccountsCopy.clear()
+            if(it.exists()) {
+                for (accounts in it.children) {
+                    val acc=accounts.getValue(AccountsData::class.java)
+                    allAccountsCopy.add(acc!!)
+                    allAccountsLive.postValue(allAccountsCopy)
+                    Log.d("RRR", allAccountsCopy.toString())
+                }
+            }
+        }
+    }
+
+    fun getAllAccountsCopy(): ArrayList<AccountsData> {
+        return allAccountsCopy
+    }
+
+    fun createAccount(account: AccountsData){
+        val sdf= SimpleDateFormat("yyyMMddHHmmss")
+        val id=sdf.format(Date())
+        account.id=id.toLong()
+        allAccountsCopy.add(0,account)
+        Firebase.database.getReference("Accounts/${account.id}").setValue(account)
     }
 
 
