@@ -38,8 +38,8 @@ class AdapterStudentDish(
         holder.onBind(notesList[position])
         holder.mBinding.itemDish.setOnClickListener {
             viewModelStudent.setPositionChoice(position)
-            fragment.findNavController().navigate(R.id.action_menuFragment_to_studentMakeChoiceFragment)
             viewModelStudent.downLoadDishForChoice()
+            fragment.findNavController().navigate(R.id.action_menuFragment_to_studentMakeChoiceFragment)
 
         }
 

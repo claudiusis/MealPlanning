@@ -98,7 +98,6 @@ class Repository {
                         dishForChoiceLive.postValue(dishForChoiceCopy)
                     }
                 }
-
             }
         }
     }
@@ -157,25 +156,29 @@ class Repository {
 
     //ЛОГИКА ШКОЛЬНИКА
 
-//    fun downLoadMyChoice(date:String){
-//        Log.d("FENIX",date)
-//        database.child("ВыборШкольника").child(date).get().addOnSuccessListener {
-//            dishStudentCopyList.clear()
-//            if(it.exists()){
-//                for (dishs in it.children){
-//                    val dish=dishs.getValue(Dish::class.java)
-//                    dishStudentCopyList.add(dish!!)
-//                    dishStudentLive.postValue(dishForChoiceCopy)
-//                }
-//            }
-//            else{
-//                dishStudentCopyList.add(Dish(1000,"Выберите первое","Выберите первое"))
-//                dishStudentCopyList.add(Dish(1001,"Выберите второе","Выберите второе"))
-//                dishStudentCopyList.add(Dish(1002,"Выберите третье","Выберите третье"))
-//                dishStudentLive.postValue(dishStudentCopyList)
-//            }
-//        }
-//    }
+    fun upLoadStudentDish(date:String){
+        database.child("ВыборШкольника/тестовый айди/$date").setValue(dishStudentLive.value)
+        Log.d("QWERTY",dishStudentLive.toString())
+    }
+    fun downLoadMyChoice(date:String){
+        Log.d("FENIX",date)
+        database.child("ВыборШкольника").child("тестовый айди").child(date).get().addOnSuccessListener {
+            dishStudentCopyList.clear()
+            if(it.exists()){
+                for (dishs in it.children){
+                    val dish=dishs.getValue(Dish::class.java)
+                    dishStudentCopyList.add(dish!!)
+                    dishStudentLive.postValue(dishStudentCopyList)
+                }
+            }
+            else{
+                dishStudentCopyList.add(Dish(1000,"Выберите первое","Выберите первое"))
+                dishStudentCopyList.add(Dish(1001,"Выберите второе","Выберите второе"))
+                dishStudentCopyList.add(Dish(1002,"Выберите третье","Выберите третье"))
+                dishStudentLive.postValue(dishStudentCopyList)
+            }
+        }
+    }
 
     fun getStudentDishLive(): MutableLiveData<ArrayList<Dish>> {
         return dishStudentLive

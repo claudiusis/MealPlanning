@@ -37,7 +37,7 @@ class LoginFragment : Fragment() {
         val currentYear = calendar.get(Calendar.YEAR)
         viewModelCreator.setDateCalendar("${currentDay}d${currentMonth}m${currentYear}y")
         viewModelStudent.setDateCalendar("${currentDay}d${currentMonth}m${currentYear}y")
-//        viewModelStudent.downLoadMyChoice()
+        viewModelStudent.downLoadMyChoice()
         viewModelCreator.downLoadDishForChoice()
         viewModelStudent.downLoadDishForChoice()
         viewModelAdmin.downLoadAllAccounts()

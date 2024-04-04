@@ -34,60 +34,6 @@ class MenuFragment : Fragment() {
     ): View {
 
         _binding = FragmentMenuStudentBinding.inflate(inflater, container, false)
-        val checkBox1=mBinding.checkFood1
-        val checkBox2=mBinding.checkFood2
-        val checkBox3=mBinding.checkFood3
-
-
-
-//        mBinding.foodName1.text=viewModelStudent.getDishFromChoice(0).name
-//        mBinding.foodName2.text=viewModelStudent.getDishFromChoice(1).name
-//        mBinding.foodName3.text=viewModelStudent.getDishFromChoice(2).name
-
-        mBinding.layoutFirstDish.setOnClickListener {
-            if (it !=checkBox1){
-                viewModelStudent.setShowMore(0)
-                findNavController().navigate(R.id.action_menuFragment_to_informationFragment)
-            }
-        }
-
-        mBinding.layoutSecondDish.setOnClickListener {
-            if (it !=checkBox2){
-                viewModelStudent.setShowMore(1)
-                findNavController().navigate(R.id.action_menuFragment_to_informationFragment)
-            }
-        }
-
-        mBinding.layoutThreedDish.setOnClickListener {
-            if (it !=checkBox3){
-                viewModelStudent.setShowMore(2)
-                findNavController().navigate(R.id.action_menuFragment_to_informationFragment)
-            }
-        }
-
-
-        checkBox1.setOnCheckedChangeListener { buttonView, isChecked ->
-            if(isChecked){
-                checkBox2.isChecked=false
-                checkBox3.isChecked=false
-            }
-        }
-
-        checkBox2.setOnCheckedChangeListener { buttonView, isChecked ->
-            if(isChecked){
-                checkBox1.isChecked=false
-                checkBox3.isChecked=false
-            }
-        }
-
-
-        checkBox3.setOnCheckedChangeListener { buttonView, isChecked ->
-            if(isChecked){
-                checkBox2.isChecked=false
-                checkBox1.isChecked=false
-            }
-        }
-
 
 
         //Переделка под ресайкл
@@ -103,10 +49,9 @@ class MenuFragment : Fragment() {
         calendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
             val selectedDate = "${dayOfMonth}d${month + 1}m${year}y"
             viewModelStudent.setDateCalendar(selectedDate)
-//            viewModelStudent.downLoadMyChoice()
+            viewModelStudent.downLoadMyChoice()
             viewModelStudent.downLoadDishForChoice()
         }
-
         studentDishAdapter= AdapterStudentDish(this,viewModelStudent)
         mBinding.recyclerStudentChoice.layoutManager=LinearLayoutManager(requireContext())
         viewModelStudent.getStudentDishLive().observe(
@@ -118,7 +63,9 @@ class MenuFragment : Fragment() {
         }
         mBinding.recyclerStudentChoice.adapter=studentDishAdapter
 
-
+        mBinding.buttonConfirm.setOnClickListener {
+            viewModelStudent.upLoadStudentDish()
+        }
 
         return mBinding.root
     }

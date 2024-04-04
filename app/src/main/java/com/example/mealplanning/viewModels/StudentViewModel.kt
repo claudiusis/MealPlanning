@@ -13,11 +13,19 @@ class StudentViewModel:ViewModel() {
 
     private var dateCalendarStudent="w"
     private var positionChoice=0
+    private var keyType=""
 
-
+    fun getKeyType(): String {
+        return keyType
+    }
 
     fun setPositionChoice(pos:Int){
         positionChoice=pos
+        when(pos){
+            0->keyType="First"
+            1->keyType="Second"
+            2->keyType="Drink"
+        }
     }
     fun getPositionChoice(): Int {
         return positionChoice
@@ -34,9 +42,13 @@ class StudentViewModel:ViewModel() {
         repository.downLoadDishForChoice(dateCalendarStudent)
     }
 
-/*    fun downLoadMyChoice(){
+    fun downLoadMyChoice(){
         repository.downLoadMyChoice(dateCalendarStudent)
-    }*/
+    }
+
+    fun upLoadStudentDish(){
+        repository.upLoadStudentDish(dateCalendarStudent)
+    }
 
     fun getStudentDishLive(): MutableLiveData<ArrayList<Dish>> {
         return repository.getStudentDishLive()
@@ -50,9 +62,9 @@ class StudentViewModel:ViewModel() {
         dateCalendarStudent=date
     }
 
-/*    fun getDishForChoice(): MutableLiveData<ArrayList<Dish>> {
+    fun getDishForChoice(): MutableLiveData<HashMap<String, ArrayList<Dish>>> {
         return repository.getListAfterChoiceLive()
-    }*/
+    }
     fun replaceDishForChoice(pos : Int, dish: Dish){
         repository.replaceDishForChoiceStudent(pos, dish)
     }
