@@ -31,9 +31,9 @@ class InformationFragment : Fragment() {
         }
 
         val numberDish=viewModelStudent.getShowMore()
-        val dish=viewModelStudent.getDishFromChoice(numberDish)
-        mBinding.nameDish.text=dish.name
-        mBinding.ingredients.text=dish.ingredients
+//        val dish=viewModelStudent.getDishFromChoice(numberDish)
+//        mBinding.nameDish.text=dish.name
+//        mBinding.ingredients.text=dish.ingredients
 
 
         return mBinding.root

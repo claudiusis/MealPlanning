@@ -29,17 +29,14 @@ class StudentViewModel:ViewModel() {
         return showMore
     }
 
-    fun getDishFromChoice(number:Int): Dish {
-        return repository.getDishFromChoice(number)
-    }
 
     fun downLoadDishForChoice(){
         repository.downLoadDishForChoice(dateCalendarStudent)
     }
 
-    fun downLoadMyChoice(){
+/*    fun downLoadMyChoice(){
         repository.downLoadMyChoice(dateCalendarStudent)
-    }
+    }*/
 
     fun getStudentDishLive(): MutableLiveData<ArrayList<Dish>> {
         return repository.getStudentDishLive()
@@ -53,9 +50,9 @@ class StudentViewModel:ViewModel() {
         dateCalendarStudent=date
     }
 
-    fun getDishForChoice(): MutableLiveData<ArrayList<Dish>> {
+/*    fun getDishForChoice(): MutableLiveData<ArrayList<Dish>> {
         return repository.getListAfterChoiceLive()
-    }
+    }*/
     fun replaceDishForChoice(pos : Int, dish: Dish){
         repository.replaceDishForChoiceStudent(pos, dish)
     }

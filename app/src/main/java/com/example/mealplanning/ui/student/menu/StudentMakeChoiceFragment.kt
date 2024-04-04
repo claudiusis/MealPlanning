@@ -28,11 +28,11 @@ class StudentMakeChoiceFragment : Fragment() {
 
         recyclerStudentMakeChoice=AdapterStudentMakeChoice(this,viewModelStudent)
         mBinding.recyclerMakeChoice.layoutManager=LinearLayoutManager(requireContext())
-        viewModelStudent.getDishForChoice().observe(
-            viewLifecycleOwner,
-        ){
-            array->recyclerStudentMakeChoice.notesList=array
-        }
+//        viewModelStudent.getDishForChoice().observe(
+//            viewLifecycleOwner,
+//        ){
+//            array->recyclerStudentMakeChoice.notesList=array
+//        }
         mBinding.recyclerMakeChoice.adapter=recyclerStudentMakeChoice
 
 

@@ -40,9 +40,9 @@ class MenuFragment : Fragment() {
 
 
 
-        mBinding.foodName1.text=viewModelStudent.getDishFromChoice(0).name
-        mBinding.foodName2.text=viewModelStudent.getDishFromChoice(1).name
-        mBinding.foodName3.text=viewModelStudent.getDishFromChoice(2).name
+//        mBinding.foodName1.text=viewModelStudent.getDishFromChoice(0).name
+//        mBinding.foodName2.text=viewModelStudent.getDishFromChoice(1).name
+//        mBinding.foodName3.text=viewModelStudent.getDishFromChoice(2).name
 
         mBinding.layoutFirstDish.setOnClickListener {
             if (it !=checkBox1){
@@ -103,7 +103,7 @@ class MenuFragment : Fragment() {
         calendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
             val selectedDate = "${dayOfMonth}d${month + 1}m${year}y"
             viewModelStudent.setDateCalendar(selectedDate)
-            viewModelStudent.downLoadMyChoice()
+//            viewModelStudent.downLoadMyChoice()
             viewModelStudent.downLoadDishForChoice()
         }
 

@@ -15,7 +15,8 @@ import com.example.mealplanning.viewModels.CreatorViewModel
 
 class AdapterDishAfterChoice(
     private val fragment: CalendarMenuCreator,
-    private val viewModelCreator:CreatorViewModel
+    private val viewModelCreator:CreatorViewModel,
+    private val typeDish:String
 ) : RecyclerView.Adapter<AdapterDishAfterChoice.AfterChoiceDishViewHolder>() {
 
 
@@ -35,8 +36,10 @@ class AdapterDishAfterChoice(
 
     override fun onBindViewHolder(holder: AfterChoiceDishViewHolder, position: Int) {
         holder.onBind(notesList[position])
+
         holder.mBinding.itemDish.setOnClickListener {
             viewModelCreator.setPositionChoice(position)
+            viewModelCreator.setKeyForDishes(typeDish)
             fragment.findNavController().navigate(R.id.action_calendarMenuCreator_to_chooseFood)
         }
 

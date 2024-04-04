@@ -28,7 +28,7 @@ class ChooseFoodFragment : Fragment() {
         mBinding.recyclerDish.layoutManager=LinearLayoutManager(context)
         mBinding.recyclerDish.adapter=recyclerAdapter
 
-        recyclerAdapter.notesList=viewModelCreator.getAllDishList()
+        recyclerAdapter.notesList= viewModelCreator.getAllDishList()!!
 
         return mBinding.root
     }

@@ -31,17 +31,17 @@ class LoginFragment : Fragment() {
     ): View? {
         _binding=FragmentLoginBinding.inflate(inflater, container, false)
 
-        viewModelCreator.addDish()
         val calendar=Calendar.getInstance()
         val currentDay = calendar.get(Calendar.DAY_OF_MONTH)
         val currentMonth = calendar.get(Calendar.MONTH) + 1 // Месяцы в Calendar начинаются с 0
         val currentYear = calendar.get(Calendar.YEAR)
         viewModelCreator.setDateCalendar("${currentDay}d${currentMonth}m${currentYear}y")
         viewModelStudent.setDateCalendar("${currentDay}d${currentMonth}m${currentYear}y")
-        viewModelStudent.downLoadMyChoice()
+//        viewModelStudent.downLoadMyChoice()
         viewModelCreator.downLoadDishForChoice()
         viewModelStudent.downLoadDishForChoice()
         viewModelAdmin.downLoadAllAccounts()
+        viewModelCreator.downLoadAllDish()
 
 
 
