@@ -33,6 +33,9 @@
         <action
             android:id="@+id/action_calendarMenuCreator_to_chooseFood"
             app:destination="@id/chooseFood" />
+        <action
+            android:id="@+id/action_calendarMenuCreator_to_informationCreatorFragment"
+            app:destination="@id/informationCreatorFragment" />
     </fragment>
     <fragment
         android:id="@+id/chooseFood"
@@ -42,6 +45,9 @@
         <action
             android:id="@+id/action_chooseFood_to_calendarMenuCreator"
             app:destination="@id/calendarMenuCreator" />
+        <action
+            android:id="@+id/action_chooseFood_to_informationCreatorFragment"
+            app:destination="@id/informationCreatorFragment" />
     </fragment>
     <fragment
         android:id="@+id/adminAccountsFragment"
@@ -60,4 +66,8 @@
             android:id="@+id/action_adminCreateAccount_to_adminAccountsFragment"
             app:destination="@id/adminAccountsFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/informationCreatorFragment"
+        android:name="com.example.mealplanning.ui.menu_creator.InformationCreatorFragment"
+        android:label="InformationCreatorFragment" />
 </navigation>
