@@ -32,6 +32,10 @@ class Repository {
     private val allAccountsLive : MutableLiveData<ArrayList<AccountsData>> by lazy {MutableLiveData<ArrayList<AccountsData>>()}
     private val allAccountsCopy=ArrayList<AccountsData>()
 
+    private val dishToCook = ArrayList<Dish>()
+    private val dishToCookLive : MutableLiveData<ArrayList<Dish>> by lazy { MutableLiveData<ArrayList<Dish>>() }
+
+
     fun downLoadAllDish(){
         database.child("dish").get().addOnSuccessListener {
             allDish.clear()
@@ -86,7 +90,7 @@ class Repository {
 
     fun downLoadDishForChoiceCreator(date:String){
         Log.d("FENIX",date)
-        database.child("Выбор").child(date).get().addOnSuccessListener {
+        database.child("Выбор").child(date).child("тестовый айди").get().addOnSuccessListener {
             dishForChoiceCopy.clear()
             if(it.exists()){
                 for (dishs in it.children){
@@ -124,7 +128,7 @@ class Repository {
 
     fun downLoadMyChoice(date:String){
         Log.d("FENIX",date)
-        database.child("ВыборШкольника").child(date).get().addOnSuccessListener {
+        database.child("ВыборШкольника").child(date).child("тестовый айди").get().addOnSuccessListener {
             dishStudentCopyList.clear()
             if(it.exists()){
                 for (dishs in it.children){
@@ -183,5 +187,31 @@ class Repository {
 
 
 
+
+    //ПОВАР
+
+    fun getTotalDishesCountForStudentChoice(): Int {
+        return dishStudentCopyList.size
+    }
+
+    fun downLoadDishToCook(date : String){
+        database.child("ВыборШкольника").child("date").get().addOnSuccessListener {
+            dishToCook.clear()
+            if(it.exists()) {
+                for (dishs in it.children) {
+                    val dish = dishs.getValue(Dish::class.java)
+                    dishToCook.add(dish!!)
+                    dishToCookLive.postValue(dishToCook)
+                }
+            }
+
+        }
+        Log.d("FENIX","${dishToCook} --- Массив повара")
+    }
+
+
+    fun getDishToCookLiveData(): MutableLiveData<ArrayList<Dish>> {
+        return dishToCookLive
+    }
 
 }
