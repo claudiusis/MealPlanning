@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.mealplanning.R
 import com.example.mealplanning.databinding.FragmentLoginBinding
 import com.example.mealplanning.viewModels.AdminViewModel
+import com.example.mealplanning.viewModels.ControllerViewModel
 import com.example.mealplanning.viewModels.CreatorViewModel
 import com.example.mealplanning.viewModels.StudentViewModel
 
@@ -19,6 +20,8 @@ class LoginFragment : Fragment() {
     private val viewModelCreator: CreatorViewModel by activityViewModels<CreatorViewModel>()
     private val viewModelStudent: StudentViewModel by activityViewModels<StudentViewModel>()
     private val viewModelAdmin:AdminViewModel by activityViewModels<AdminViewModel> ()
+    private val viewModelController: ControllerViewModel by activityViewModels<ControllerViewModel> ()
+
 
     private var _binding:FragmentLoginBinding?=null
 
@@ -55,6 +58,10 @@ class LoginFragment : Fragment() {
             findNavController().navigate(R.id.action_loginFragment_to_adminAccountsFragment)
         }
 
+        mBinding.controlerBtn.setOnClickListener {
+            viewModelController.downLoadAllProducts()
+            findNavController().navigate(R.id.action_loginFragment_to_controllerFragment)
+        }
 
         return mBinding.root
     }

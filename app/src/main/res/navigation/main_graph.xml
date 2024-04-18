@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_loginFragment_to_adminAccountsFragment"
             app:destination="@id/adminAccountsFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_controllerFragment"
+            app:destination="@id/controllerFragment" />
     </fragment>
     <fragment
         android:id="@+id/mainFragment"
@@ -59,5 +62,19 @@
         <action
             android:id="@+id/action_adminCreateAccount_to_adminAccountsFragment"
             app:destination="@id/adminAccountsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/productCreationFragment"
+        android:name="com.example.mealplanning.ui.controller.ProductCreationFragment"
+        android:label="fragment_product_creation"
+        tools:layout="@layout/fragment_product_creation" />
+    <fragment
+        android:id="@+id/controllerFragment"
+        android:name="com.example.mealplanning.ui.controller.ControllerFragment"
+        android:label="fragment_controler"
+        tools:layout="@layout/fragment_controler" >
+        <action
+            android:id="@+id/action_controllerFragment_to_productCreationFragment"
+            app:destination="@id/productCreationFragment" />
     </fragment>
 </navigation>

@@ -3,6 +3,7 @@ package com.example.mealplanning.repository
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.mealplanning.ui.admin.AccountsData
+import com.example.mealplanning.ui.controller.Product
 import com.example.mealplanning.ui.menu_creator.Dish
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -33,6 +34,9 @@ class Repository {
 
     private val allAccountsLive : MutableLiveData<ArrayList<AccountsData>> by lazy {MutableLiveData<ArrayList<AccountsData>>()}
     private val allAccountsCopy=ArrayList<AccountsData>()
+
+    private val allProductCopy=ArrayList<Product>()
+    private val allProductLive:MutableLiveData<ArrayList<Product>> by lazy {MutableLiveData<ArrayList<Product>>()}
 
     private val allDishMap = HashMap<String, ArrayList<Dish>>().apply {    put(
         "First", arrayListOf(            Dish(0, "Щи", "Капуста, картофель, морковь", 343),
@@ -220,6 +224,49 @@ class Repository {
         Firebase.database.getReference("Accounts/${account.id}").setValue(account)
     }
 
+
+
+
+
+
+
+
+
+    //ФУНКЦИОНАЛ КОНТРОЛЕРА
+    fun downLoadAllProducts(){
+        database.child("Продукты").get().addOnSuccessListener {
+            allProductCopy.clear()
+            if (it.exists()){
+                for(products in it.children){
+                    val product=products.getValue(Product::class.java)
+                    Log.d("RRT",product.toString())
+                    allProductCopy.add(product!!)
+                    allProductLive.postValue(allProductCopy)
+                }
+            }
+        }
+    }
+
+    fun createSupply(productName:String,count:Int){
+
+        database.child("Продукты").child(productName).get().addOnSuccessListener {
+            if (it.exists()){
+                var oldCount=it.getValue(Int::class.java)
+                oldCount=oldCount!! + count
+                val product=Product(productName,oldCount)
+                allProductCopy.find { product.name == it.name }?.count = product.count
+                allProductLive.postValue(allProductCopy)
+                database.child("Продукты").child(productName).setValue(product)
+            }else{
+                val product=Product(productName,count)
+                database.child("Продукты").child(productName).setValue(product)
+            }
+        }
+    }
+
+    fun getAllProductsLive(): MutableLiveData<ArrayList<Product>> {
+        return allProductLive
+    }
 
 
 
