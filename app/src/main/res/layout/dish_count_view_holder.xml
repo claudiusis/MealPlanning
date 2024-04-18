@@ -18,7 +18,7 @@
         android:layout_marginStart="12dp">
 
         <TextView
-            android:id="@+id/textNameDish"
+            android:id="@+id/textNameDishCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Название"
@@ -28,26 +28,9 @@
 
             />
 
-        <ImageButton
-            android:id="@+id/infoButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/baseline_info_24"
-            android:background="@android:color/transparent"
-            android:layout_gravity="end"
-            android:layout_marginEnd="16dp"/>
 
         <TextView
-            android:id="@+id/textDescriptionDish"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Описание"
-            android:layout_marginTop="12dp"
-            android:textColor="@color/black"
-            android:textSize="14sp"/>
-
-        <TextView
-            android:id="@+id/textDishCounter"
+            android:id="@+id/textDishCounterCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Количество: "
@@ -57,5 +40,6 @@
 
 
     </LinearLayout>
+
 
 </LinearLayout>

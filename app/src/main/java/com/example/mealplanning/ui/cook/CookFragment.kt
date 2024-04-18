@@ -13,6 +13,7 @@ import com.example.mealplanning.R
 import com.example.mealplanning.databinding.FragmentCalendarMenuCreatorBinding
 import com.example.mealplanning.databinding.FragmentCookBinding
 import com.example.mealplanning.ui.menu_creator.AdapterDishAfterChoice
+import com.example.mealplanning.ui.menu_creator.Dish
 import com.example.mealplanning.viewModels.CookViewModel
 import com.example.mealplanning.viewModels.CreatorViewModel
 
@@ -31,7 +32,16 @@ class CookFragment : Fragment() {
 
         val calendar = Calendar.getInstance()
 
+        val test = ArrayList<Dish>()
+
         val calendarView = mBinding.calendarViewCook
+
+        val currentDay = calendar.get(Calendar.DAY_OF_MONTH)
+        val currentMonth = calendar.get(Calendar.MONTH) + 1 // Месяцы в Calendar начинаются с 0
+        val currentYear = calendar.get(Calendar.YEAR)
+
+        viewModelCook.setDateCalendar("${currentDay}d${currentMonth}m${currentYear}y")
+
 
         val dateChoiceString=viewModelCook.getDateCalendar()
 
@@ -44,22 +54,24 @@ class CookFragment : Fragment() {
         calendarView.setDate(selectedDateInMillis, true, true)
 
 
+        viewModelCook.downloadDishToCook(viewModelCook.getDateCalendar())
+        Log.d("zalupa","${viewModelCook.getDateCalendar()}текущая дата")
         calendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
             val selectedDate = "${dayOfMonth}d${month + 1}m${year}y"
             viewModelCook.setDateCalendar(selectedDate)
-            viewModelCook.downLoadDishForChoice()
+            //viewModelCook.downLoadDishForChoice()
             viewModelCook.downloadDishToCook(selectedDate)
         }
 
 
         cookDishAdapter = CookDishAdapter(this, viewModelCook)
         mBinding.recyclerCookInfo.layoutManager= LinearLayoutManager(requireContext())
-        viewModelCook.getListAfterChoiceLive().observe(
+        viewModelCook.getDishToCookLiveData().observe(
             viewLifecycleOwner,
         ){
                 array->cookDishAdapter.notesList=array
             cookDishAdapter.notifyDataSetChanged()
-            Log.d("FENIX","${cookDishAdapter.notesList}Массив в адаптере")
+            Log.d("zalupa","${cookDishAdapter.notesList}Массив в адаптере")
         }
         mBinding.recyclerCookInfo.adapter=cookDishAdapter
 //        dishAfterChoiceRecyclerAdapter.notesList=viewModelCreator.getSelectedDish()

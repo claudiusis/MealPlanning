@@ -24,17 +24,16 @@ class CookDishAdapter(
 ) : RecyclerView.Adapter<CookDishAdapter.CookDishViewHolder>() {
 
 
-    var notesList = listOf<Dish>()
+    var notesList = listOf<DishToCook>()
         set(value) {
             val callback = MyDiffUtil(oldArray = field, newArray = value,
-                {old, new ->  old.id==new.id})
+                {old, new ->  old.name==new.name})
             field = value
             val diffResult = DiffUtil.calculateDiff(callback)
             diffResult.dispatchUpdatesTo(this)
-
-
-
         }
+
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CookDishViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.dish_count_view_holder, parent, false)
@@ -44,16 +43,12 @@ class CookDishAdapter(
     override fun onBindViewHolder(holder: CookDishViewHolder, position: Int) {
         holder.onBind(notesList[position])
 
-        holder.mBinding.textDishCounter.text = viewModelCook.getTotalStudentDishes().toString()
-
-        if(holder.mBinding.textNameDish.text.equals("Выберите блюдо")) {
-            holder.mBinding.infoButton.visibility = View.GONE
-
+        if(holder.mBinding.textDishCounterCount.text == "0") {
+            holder.mBinding.textDishCounterCount.visibility = View.GONE
         }
         else {
-            holder.mBinding.infoButton.visibility = View.VISIBLE
+            holder.mBinding.textDishCounterCount.visibility = View.VISIBLE
         }
-
 
     }
 
@@ -68,15 +63,13 @@ class CookDishAdapter(
         init {
             _binding= DishCountViewHolderBinding.bind(itemView)
         }
+        private val nameDish: TextView = itemView.findViewById(R.id.textNameDishCount)
+        private val dishCount : TextView = itemView.findViewById(R.id.textDishCounterCount)
 
-        private val imageView: ImageView = itemView.findViewById(R.id.imageDish)
-        private val nameDish: TextView = itemView.findViewById(R.id.textNameDish)
-        private val descriptionDish: TextView = itemView.findViewById(R.id.textDescriptionDish)
-        private val dishCount : TextView = itemView.findViewById(R.id.textDishCounter)
-        private val infoBtn: ImageButton = itemView.findViewById(R.id.infoButton)
-        fun onBind(items: Dish){
+        fun onBind(items: DishToCook){
             nameDish.text=items.name
-            descriptionDish.text=items.ingredients
+            dishCount.text=items.count.toString()
+
         }
 
     }

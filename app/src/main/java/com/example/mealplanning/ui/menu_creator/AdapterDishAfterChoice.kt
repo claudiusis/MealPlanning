@@ -1,10 +1,8 @@
 package com.example.mealplanning.ui.menu_creator
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.navigation.fragment.findNavController
@@ -17,7 +15,8 @@ import com.example.mealplanning.viewModels.CreatorViewModel
 
 class AdapterDishAfterChoice(
     private val fragment: CalendarMenuCreator,
-    private val viewModelCreator:CreatorViewModel
+    private val viewModelCreator:CreatorViewModel,
+    private val typeDish:String
 ) : RecyclerView.Adapter<AdapterDishAfterChoice.AfterChoiceDishViewHolder>() {
 
 
@@ -28,9 +27,6 @@ class AdapterDishAfterChoice(
             field = value
             val diffResult = DiffUtil.calculateDiff(callback)
             diffResult.dispatchUpdatesTo(this)
-
-
-
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AfterChoiceDishViewHolder {
@@ -41,25 +37,10 @@ class AdapterDishAfterChoice(
     override fun onBindViewHolder(holder: AfterChoiceDishViewHolder, position: Int) {
         holder.onBind(notesList[position])
 
-
-        if(holder.mBinding.textNameDish.text.equals("Выберите блюдо")) {
-            holder.mBinding.infoButton.visibility = View.GONE
-
-        }
-        else {
-            holder.mBinding.infoButton.visibility = View.VISIBLE
-        }
-
-
-
         holder.mBinding.itemDish.setOnClickListener {
             viewModelCreator.setPositionChoice(position)
+            viewModelCreator.setKeyForDishes(typeDish)
             fragment.findNavController().navigate(R.id.action_calendarMenuCreator_to_chooseFood)
-        }
-
-        holder.mBinding.infoButton.setOnClickListener() {
-            viewModelCreator.setPositionChoice(position + 100)
-            fragment.findNavController().navigate(R.id.action_calendarMenuCreator_to_informationCreatorFragment)
         }
 
     }
@@ -81,12 +62,14 @@ class AdapterDishAfterChoice(
         private val imageView: ImageView = itemView.findViewById(R.id.imageDish)
         private val nameDish: TextView = itemView.findViewById(R.id.textNameDish)
         private val descriptionDish: TextView = itemView.findViewById(R.id.textDescriptionDish)
-        private val infoBtn: ImageButton = itemView.findViewById(R.id.infoButton)
+
         fun onBind(items:Dish){
             nameDish.text=items.name
             descriptionDish.text=items.ingredients
-
         }
+
+
+
 
     }
 }

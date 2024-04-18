@@ -3,6 +3,7 @@ package com.example.mealplanning.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.mealplanning.repository.Repository
+import com.example.mealplanning.ui.cook.DishToCook
 import com.example.mealplanning.ui.menu_creator.Dish
 
 class CookViewModel : ViewModel() {
@@ -14,9 +15,6 @@ class CookViewModel : ViewModel() {
     private var dateCalendarCook="w"
     private var positionChoice=0
 
-    fun getFromAllDish(number: Int): Dish {
-        return repository.getFromAllDish(number)
-    }
     fun setPositionChoice(pos:Int){
         positionChoice=pos
     }
@@ -31,9 +29,7 @@ class CookViewModel : ViewModel() {
         return showMore
     }
 
-    fun getDishFromChoice(number:Int): Dish {
-        return repository.getDishFromChoice(number)
-    }
+
 
     fun downLoadDishForChoice(){
         repository.downLoadDishForChoice(dateCalendarCook)
@@ -55,24 +51,19 @@ class CookViewModel : ViewModel() {
         dateCalendarCook=date
     }
 
-    fun getDishForChoice(): MutableLiveData<ArrayList<Dish>> {
-        return repository.getListAfterChoiceLive()
-    }
-    fun replaceDishForChoice(pos : Int, dish: Dish){
-        repository.replaceDishForChoiceStudent(pos, dish)
-    }
 
-    fun getListAfterChoiceLive(): MutableLiveData<ArrayList<Dish>> {
+
+    fun getListAfterChoiceLive(): MutableLiveData<HashMap<String, ArrayList<Dish>>> {
         return repository.getListAfterChoiceLive()
     }
 
-    fun getTotalStudentDishes(): Int {
-        return repository.getTotalDishesCountForStudentChoice()
-    }
 
     fun downloadDishToCook(date : String) {
         repository.downLoadDishToCook(date)
     }
 
 
+    fun getDishToCookLiveData() : MutableLiveData<ArrayList<DishToCook>>{
+        return repository.getDishToCookLiveData()
+    }
 }

@@ -21,7 +21,10 @@ class CalendarMenuCreator : Fragment() {
 
     private var _binding: FragmentCalendarMenuCreatorBinding?=null
     private val viewModelCreator: CreatorViewModel by activityViewModels<CreatorViewModel>()
-    private lateinit var dishAfterChoiceRecyclerAdapter:AdapterDishAfterChoice
+    private lateinit var dishAfterChoiceRecyclerAdapter1:AdapterDishAfterChoice
+    private lateinit var dishAfterChoiceRecyclerAdapter2:AdapterDishAfterChoice
+    private lateinit var dishAfterChoiceRecyclerAdapter3:AdapterDishAfterChoice
+
     private val mBinding get()=_binding!!
 
 
@@ -57,16 +60,39 @@ class CalendarMenuCreator : Fragment() {
         }
 
 
-        dishAfterChoiceRecyclerAdapter= AdapterDishAfterChoice(this,viewModelCreator)
-        mBinding.chooseFoodRecyclerView.layoutManager=LinearLayoutManager(requireContext())
+        dishAfterChoiceRecyclerAdapter1= AdapterDishAfterChoice(this,viewModelCreator,"First")
+        mBinding.chooseFood1RecyclerView.layoutManager=LinearLayoutManager(requireContext())
+        dishAfterChoiceRecyclerAdapter2=AdapterDishAfterChoice(this,viewModelCreator,"Second")
+        mBinding.chooseFood2RecyclerView.layoutManager=LinearLayoutManager(requireContext())
+        dishAfterChoiceRecyclerAdapter3=AdapterDishAfterChoice(this,viewModelCreator,"Drink")
+        mBinding.chooseFood3RecyclerView.layoutManager=LinearLayoutManager(requireContext())
+
+
+
+
+
+
+
         viewModelCreator.getListAfterChoiceLive().observe(
             viewLifecycleOwner,
         ){
-            array->dishAfterChoiceRecyclerAdapter.notesList=array
-            dishAfterChoiceRecyclerAdapter.notifyDataSetChanged()
-            Log.d("FENIX","${dishAfterChoiceRecyclerAdapter.notesList}Массив в адаптере")
+            array->dishAfterChoiceRecyclerAdapter1.notesList= array["First"]!!
+            dishAfterChoiceRecyclerAdapter2.notesList=array["Second"]!!
+            dishAfterChoiceRecyclerAdapter3.notesList=array["Drink"]!!
+            Log.d("QWERTY",dishAfterChoiceRecyclerAdapter1.notesList.toString())
+            dishAfterChoiceRecyclerAdapter1.notifyDataSetChanged()
+
+            Log.d("FENIX","${dishAfterChoiceRecyclerAdapter1.notesList}Массив в адаптере")
         }
-        mBinding.chooseFoodRecyclerView.adapter=dishAfterChoiceRecyclerAdapter
+
+
+
+
+        mBinding.chooseFood1RecyclerView.adapter=dishAfterChoiceRecyclerAdapter1
+        mBinding.chooseFood2RecyclerView.adapter=dishAfterChoiceRecyclerAdapter2
+        mBinding.chooseFood3RecyclerView.adapter=dishAfterChoiceRecyclerAdapter3
+
+
 //        dishAfterChoiceRecyclerAdapter.notesList=viewModelCreator.getSelectedDish()
 
 

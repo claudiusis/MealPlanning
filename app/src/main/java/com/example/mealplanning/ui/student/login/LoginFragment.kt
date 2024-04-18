@@ -31,7 +31,6 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding=FragmentLoginBinding.inflate(inflater, container, false)
-
         viewModelCreator.addDish()
         val calendar=Calendar.getInstance()
         val currentDay = calendar.get(Calendar.DAY_OF_MONTH)
@@ -46,6 +45,7 @@ class LoginFragment : Fragment() {
         viewModelCook.downLoadDishForChoice()
 
         viewModelAdmin.downLoadAllAccounts()
+        viewModelCreator.downLoadAllDish()
 
 
 

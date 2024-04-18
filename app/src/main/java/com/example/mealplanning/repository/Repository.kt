@@ -3,6 +3,7 @@ package com.example.mealplanning.repository
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.mealplanning.ui.admin.AccountsData
+import com.example.mealplanning.ui.cook.DishToCook
 import com.example.mealplanning.ui.menu_creator.Dish
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -13,48 +14,80 @@ class Repository {
 
     private val database=Firebase.database.reference
 
-    private val allDish=ArrayList<Dish>().apply {
+/*    private val allDish=ArrayList<Dish>().apply {
         add(Dish(0,"Макароны", "Ингредиенты",343))
         add(Dish(1,"Рис", "Ингредиенты2",343))
         add(Dish(2,"Гречка", "Ингредиенты",343))
-    }
+    }*/
+
+    private val allDish = HashMap<String, ArrayList<Dish>>()
 
     private val studentChoice=ArrayList<Dish>()
 
-    private val dishForChoiceLive:MutableLiveData<ArrayList<Dish>> by lazy { MutableLiveData<ArrayList<Dish>>() }
-    private val dishForChoiceCopy=ArrayList<Dish>()
+    private val dishForChoiceLive:MutableLiveData<HashMap<String,ArrayList<Dish>>> by lazy { MutableLiveData<HashMap<String,ArrayList<Dish>>>() }
+    private val dishForChoiceCopy=HashMap<String,ArrayList<Dish>>()
 
     private val dishStudentForChoiceLive:MutableLiveData<ArrayList<Dish>> by lazy {MutableLiveData<ArrayList<Dish>>()}
     private val dishStudentLive:MutableLiveData<ArrayList<Dish>> by lazy { MutableLiveData<ArrayList<Dish>>() }
     private val dishStudentCopyList=ArrayList<Dish>()
 
 
+
     private val allAccountsLive : MutableLiveData<ArrayList<AccountsData>> by lazy {MutableLiveData<ArrayList<AccountsData>>()}
     private val allAccountsCopy=ArrayList<AccountsData>()
 
-    private val dishToCook = ArrayList<Dish>()
-    private val dishToCookLive : MutableLiveData<ArrayList<Dish>> by lazy { MutableLiveData<ArrayList<Dish>>() }
+
+    private val dishToCook = HashMap<String, ArrayList<Dish>>()
+    private val dishToCookLive : MutableLiveData<HashMap<String,ArrayList<Dish>>> by lazy { MutableLiveData<HashMap<String,ArrayList<Dish>>>() }
+
+
+    private val allDishMap = HashMap<String, ArrayList<Dish>>().apply {    put(
+        "First", arrayListOf(            Dish(0, "Щи", "Капуста, картофель, морковь", 343),
+            Dish(1, "Борщ", "Капуста, картофель, морковь, свекла", 343),            Dish(2, "Солянка", "куриная грудка, копчёная и варёная колбасы, оливки, маслины, лимон", 343)
+        )    )
+        put(        "Second", arrayListOf(
+            Dish(3, "Плов", "Курица, рис, морковь", 343),            Dish(4, "Жаркое", "Свинина, картофель, морковь", 343),
+            Dish(5, "Макароны по-флотски", "Говяжий фарш, макароны", 343)        )
+        )
+        put(
+                "Drink", arrayListOf(            Dish(6, "Кофе", "Капучино", 343),
+        Dish(7, "Чай", "Чёрный", 343),            Dish(8, "Сок", "Яблочный", 343)
+        )    )
+    }
+
+
+    private var allDishToCookCountMap = HashMap<String, Int>()
+    private val allDishToCookCountMapLive : MutableLiveData<ArrayList<DishToCook>> by lazy { MutableLiveData<ArrayList<DishToCook>>() }
+    private val dishesToCook = ArrayList<DishToCook>()
+
+
+
+    //Метод добавления блюда
+    fun addDish(){    for ( item in allDishMap.keys){
+        database.child("dish").child(item).setValue(allDishMap[item])    }
+    }
+
 
 
     fun downLoadAllDish(){
         database.child("dish").get().addOnSuccessListener {
             allDish.clear()
             if(it.exists()) {
-                for (dishs in it.children) {
-                    val dish=dishs.getValue(Dish::class.java)
-                    allDish.add(dish!!)
+                for (types in it.children) {
+                    allDish[types.key.toString()] = arrayListOf()
+                    for (dishes in types.children){
+                        val dish=dishes.getValue(Dish::class.java)
+                        allDish[types.key]?.add(dish!!)
+                    }
+                    Log.d("RRR",allDish.toString())
                 }
             }
 
         }
     }
 
-    fun getFromAllDish(number: Int) : Dish {
-        return allDish[number]
-    }
-
-    fun getAllDishList(): ArrayList<Dish> {
-        return allDish
+    fun getAllDishList(key:String): ArrayList<Dish>? {
+        return allDish[key]
     }
 
 
@@ -63,78 +96,96 @@ class Repository {
     }
 
 
-    fun addDish(){
-        database.child("dish").setValue(allDish)
-    }
+//    fun addDish(){
+//        database.child("dish").setValue(allDish)
+//    }
 
     fun downLoadDishForChoice(date:String){
         Log.d("FENIX",date)
         database.child("Выбор").child(date).get().addOnSuccessListener {
             dishForChoiceCopy.clear()
             if(it.exists()){
-                for (dishs in it.children){
-                    val dish=dishs.getValue(Dish::class.java)
-                    dishForChoiceCopy.add(dish!!)
-                    dishForChoiceLive.postValue(dishForChoiceCopy)
+                for(types in it.children){
+                    dishForChoiceCopy[types.key.toString()]= arrayListOf()
+                    for (dishes in types.children){
+                        val dish=dishes.getValue(Dish::class.java)
+                        dishForChoiceCopy[types.key]?.add(dish!!)
+                        dishForChoiceLive.postValue(dishForChoiceCopy)
+                    }
                 }
-            }
-            else{
-                dishForChoiceCopy.add(Dish(100,"Будет скоро","Будет скоро"))
-                dishForChoiceCopy.add(Dish(101,"Будет скоро","Будет скоро"))
-                dishForChoiceCopy.add(Dish(102,"Будет скоро","Будет скоро"))
-                dishForChoiceLive.postValue(dishForChoiceCopy)
             }
         }
     }
+
 
 
     fun downLoadDishForChoiceCreator(date:String){
         Log.d("FENIX",date)
-        database.child("Выбор").child(date).child("тестовый айди").get().addOnSuccessListener {
+        database.child("Выбор").child(date).get().addOnSuccessListener {
             dishForChoiceCopy.clear()
             if(it.exists()){
-                for (dishs in it.children){
-                    val dish=dishs.getValue(Dish::class.java)
-                    dishForChoiceCopy.add(dish!!)
-                    dishForChoiceLive.postValue(dishForChoiceCopy)
+                for(types in it.children){
+                    dishForChoiceCopy[types.key.toString()]= arrayListOf()
+                    for (dishes in types.children){
+                        val dish=dishes.getValue(Dish::class.java)
+                        dishForChoiceCopy[types.key]?.add(dish!!)
+                        dishForChoiceLive.postValue(dishForChoiceCopy)
+                    }
                 }
             }
             else{
-                dishForChoiceCopy.add(Dish(10000,"Выберите блюдо","Выберите блюдо"))
-                dishForChoiceCopy.add(Dish(10001,"Выберите блюдо","Выберите блюдо"))
-                dishForChoiceCopy.add(Dish(10002,"Выберите блюдо","Выберите блюдо"))
+                dishForChoiceCopy.put("First", arrayListOf(
+                    Dish(0, "Выберите первое"),
+                    Dish(0, "Выберите первое"),
+                    Dish(0, "Выберите первое")
+                ))
+                dishForChoiceCopy.put("Second", arrayListOf(
+                    Dish(0, "Выберите второе"),
+                    Dish(0, "Выберите второе"),
+                    Dish(0, "Выберите второе")
+                ))
+                dishForChoiceCopy.put("Drink", arrayListOf(
+                    Dish(0, "Выберите напиток"),
+                    Dish(0, "Выберите напиток"),
+                    Dish(0, "Выберите напиток")
+                ))
                 dishForChoiceLive.postValue(dishForChoiceCopy)
             }
         }
+
     }
 
-    fun getDishFromChoice(number:Int): Dish {
-        return dishForChoiceLive.value!![number]
-    }
-    fun getListAfterChoiceLive(): MutableLiveData<ArrayList<Dish>> {
+    fun getListAfterChoiceLive(): MutableLiveData<HashMap<String, ArrayList<Dish>>> {
         return dishForChoiceLive
     }
     fun replaceDishForChoiceStudent(pos :Int, dish: Dish){
         dishStudentCopyList[pos]=dish
         dishStudentLive.postValue(dishStudentCopyList)
     }
-    fun replaceDishForChoiceCreator(pos:Int,dish: Dish){
-        dishForChoiceCopy[pos]=dish
+
+
+    fun replaceDishForChoiceCreator(key:String,pos:Int,dish: Dish){
+        dishForChoiceCopy[key]?.set(pos, dish)
         dishForChoiceLive.postValue(dishForChoiceCopy)
     }
 
 
     //ЛОГИКА ШКОЛЬНИКА
 
+    fun upLoadStudentDish(date:String){
+        database.child("ВыборШкольника/$date/тестовый айди2").setValue(dishStudentLive.value)
+        Log.d("QWERTY",dishStudentLive.toString())
+    }
     fun downLoadMyChoice(date:String){
         Log.d("FENIX",date)
-        database.child("ВыборШкольника").child(date).child("тестовый айди").get().addOnSuccessListener {
+        database.child("ВыборШкольника").child(date).child("тестовый айди2").get().addOnSuccessListener {
+            Log.d("RRR","зашел")
             dishStudentCopyList.clear()
             if(it.exists()){
                 for (dishs in it.children){
                     val dish=dishs.getValue(Dish::class.java)
                     dishStudentCopyList.add(dish!!)
-                    dishStudentLive.postValue(dishForChoiceCopy)
+                    dishStudentLive.postValue(dishStudentCopyList)
                 }
             }
             else{
@@ -186,32 +237,59 @@ class Repository {
     }
 
 
-
-
     //ПОВАР
 
-    fun getTotalDishesCountForStudentChoice(): Int {
-        return dishStudentCopyList.size
-    }
 
-    fun downLoadDishToCook(date : String){
-        database.child("ВыборШкольника").child("date").get().addOnSuccessListener {
-            dishToCook.clear()
+    fun downLoadDishToCook(date : String) {
+        database.child("ВыборШкольника").child(date).get().addOnSuccessListener {
+            dishesToCook.clear()
+            allDishToCookCountMap.clear()
             if(it.exists()) {
-                for (dishs in it.children) {
-                    val dish = dishs.getValue(Dish::class.java)
-                    dishToCook.add(dish!!)
-                    dishToCookLive.postValue(dishToCook)
+                for (userid in it.children) {
+                    Log.d("zalupa","$userid --- юзер айди")
+                    dishToCook[userid.key.toString()] = arrayListOf()
+
+                    var dishName : String = "x"
+                    for (dishes in userid.children) {
+                        val dish = dishes.getValue(Dish::class.java)
+                        dishName = dish?.name.toString()
+
+                        if (allDishToCookCountMap[dishName] == null) {
+                            allDishToCookCountMap[dishName] = 1
+                            dishesToCook.add(DishToCook(dishName, 1))
+                        } else {
+                            allDishToCookCountMap[dishName] = allDishToCookCountMap[dishName]!! + 1
+
+                            val existingDishIndex = dishesToCook.indexOfFirst { it.name == dishName }
+
+                            if (existingDishIndex != -1) {
+                                val updatedDish = dishesToCook[existingDishIndex].copy(count = allDishToCookCountMap[dishName]!!)
+                                dishesToCook[existingDishIndex] = updatedDish
+                            }
+                        }
+                    }
+
+                    Log.d("zalupa","$dishesToCook --- блюдо")
+
+                    allDishToCookCountMapLive.postValue(dishesToCook)
                 }
+            }
+            else {
+                dishesToCook.add(DishToCook("Скоро будет",0))
+                dishesToCook.add(DishToCook("Скоро будет",0))
+                dishesToCook.add(DishToCook("Скоро будет",0))
+                allDishToCookCountMapLive.postValue(dishesToCook)
             }
 
         }
-        Log.d("FENIX","${dishToCook} --- Массив повара")
+        Log.d("zalupa","$allDishToCookCountMap --- количество")
     }
 
 
-    fun getDishToCookLiveData(): MutableLiveData<ArrayList<Dish>> {
-        return dishToCookLive
+    fun getDishToCookLiveData(): MutableLiveData<ArrayList<DishToCook>> {
+        return allDishToCookCountMapLive
     }
+
+
 
 }
