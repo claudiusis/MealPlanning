@@ -23,7 +23,7 @@ class DishAdapter(
     var notesList = listOf<Dish>()
         set(value) {
             val callback = MyDiffUtil(oldArray = field, newArray = value,
-                {old, new ->  old.id==new.id})
+                {old, new ->  old.id == new.id})
             field = value
             val diffResult = DiffUtil.calculateDiff(callback)
             diffResult.dispatchUpdatesTo(this)

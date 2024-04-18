@@ -33,12 +33,10 @@ class InformationFragment : Fragment() {
         val numberDish=viewModelStudent.getPositionChoice()
 
 
-        lateinit var dish : Dish
-        if(numberDish >= 100) {
-            dish = viewModelStudent.getDishFromChoice(numberDish - 100)
-        }
-        else {
-            dish = viewModelStudent.getFromAllDish(numberDish)
+        val dish = if(numberDish >= 100) {
+            viewModelStudent.getDishFromChoice(numberDish - 100)
+        } else {
+            viewModelStudent.getFromAllDish(numberDish)
         }
 
 

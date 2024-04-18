@@ -21,7 +21,7 @@ class CalendarMenuCreator : Fragment() {
 
     private var _binding: FragmentCalendarMenuCreatorBinding?=null
     private val viewModelCreator: CreatorViewModel by activityViewModels<CreatorViewModel>()
-    private lateinit var dishAfterChoiceRecyclerAdapter:AdapterDishAfterChoice
+    private lateinit var chooseDishCreatorAdapter: ChooseDishCreatorAdapter
     private val mBinding get()=_binding!!
 
 
@@ -31,6 +31,7 @@ class CalendarMenuCreator : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding=FragmentCalendarMenuCreatorBinding.inflate(inflater, container, false)
+
         viewModelCreator.downLoadAllDish()
 
 
@@ -41,7 +42,6 @@ class CalendarMenuCreator : Fragment() {
 
         val dateChoiceString=viewModelCreator.getDateCalendar()
 
-        val calendarChoice = Calendar.getInstance()
         calendar.set(dateChoiceString.substringAfter("m").substringBefore("y").toInt(),
             dateChoiceString.substringAfter("d").substringBefore("m").toInt() - 1,
             dateChoiceString.substringBefore("d").toInt())
@@ -50,33 +50,29 @@ class CalendarMenuCreator : Fragment() {
         calendarView.setDate(selectedDateInMillis, true, true)
 
 
-        calendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
+        calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
+
             val selectedDate = "${dayOfMonth}d${month + 1}m${year}y"
             viewModelCreator.setDateCalendar(selectedDate)
             viewModelCreator.downLoadDishForChoice()
+
         }
 
+        chooseDishCreatorAdapter = ChooseDishCreatorAdapter(this, viewModelCreator, viewLifecycleOwner)
+        chooseDishCreatorAdapter.listOfDishes = listOf(
+            ChooseDish("Первое", arrayListOf()),
+            ChooseDish("Второе", arrayListOf()),
+            ChooseDish("Напиток", arrayListOf())
+        )
+        mBinding.chooseFoodRecyclerView.adapter = chooseDishCreatorAdapter
+        mBinding.chooseFoodRecyclerView.layoutManager = LinearLayoutManager(this.context)
 
-        dishAfterChoiceRecyclerAdapter= AdapterDishAfterChoice(this,viewModelCreator)
-        mBinding.chooseFoodRecyclerView.layoutManager=LinearLayoutManager(requireContext())
-        viewModelCreator.getListAfterChoiceLive().observe(
-            viewLifecycleOwner,
-        ){
-            array->dishAfterChoiceRecyclerAdapter.notesList=array
-            dishAfterChoiceRecyclerAdapter.notifyDataSetChanged()
-            Log.d("FENIX","${dishAfterChoiceRecyclerAdapter.notesList}Массив в адаптере")
-        }
-        mBinding.chooseFoodRecyclerView.adapter=dishAfterChoiceRecyclerAdapter
+
 //        dishAfterChoiceRecyclerAdapter.notesList=viewModelCreator.getSelectedDish()
-
-
-
-
 
         mBinding.btnConfirm.setOnClickListener {
             viewModelCreator.upLoadSelectedDish()
         }
-
 
         return mBinding.root
     }

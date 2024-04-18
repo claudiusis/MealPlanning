@@ -3,20 +3,63 @@ package com.example.mealplanning.repository
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.mealplanning.ui.menu_creator.Dish
-import com.google.firebase.database.getValue
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import java.util.HashMap
 
 class Repository {
 
     private val database=Firebase.database.reference
 
-    private val allDish=ArrayList<Dish>().apply {
-        add(Dish(0,"Макароны", "Ингредиенты",343))
-        add(Dish(1,"Рис", "Ингредиенты2",343))
-        add(Dish(2,"Гречка", "Ингредиенты",343))
+  /*  private val allDishMap : ArrayList<Dish> = arrayListOf(
+            Dish(0, "Щи", "Капуста, картофель, морковь", 343, "Первое"),
+            Dish(1, "Борщ", "Капуста, картофель, морковь, свекла", 343, "Первое"),
+            Dish(2, "Солянка", "куриная грудка, копчёная и варёная колбасы, оливки, маслины, лимон", 343, "Первое"),
+            Dish(3, "Плов", "Курица, рис, морковь", 343, "Второе"),
+            Dish(4, "Жаркое", "Свинина, картофель, морковь", 343, "Второе"),
+            Dish(5, "Макароны по-флотски", "Говяжий фарш, макароны", 343, "Второе"),
+            Dish(6, "Кофе", "Капучино", 343, "Напиток"),
+            Dish(7, "Чай", "Чёрный", 343, "Напиток"),
+            Dish(8, "Сок", "Яблочный", 343,"Напиток")
+    )
+*/
+
+    private val allDishMap = HashMap<String, ArrayList<Dish>>().apply {
+        put(
+            "First", arrayListOf(
+                Dish(0, "Щи", "Капуста, картофель, морковь", 343, "Первое"),
+                Dish(1, "Борщ", "Капуста, картофель, морковь, свекла", 343, "Первое"),
+                Dish(2, "Солянка", "куриная грудка, копчёная и варёная колбасы, оливки, маслины, лимон", 343, "Первое")
+            )
+        )
+        put(
+            "Second", arrayListOf(
+                Dish(3, "Плов", "Курица, рис, морковь", 343, "Второе"),
+                Dish(4, "Жаркое", "Свинина, картофель, морковь", 343, "Второе"),
+                Dish(5, "Макароны по-флотски", "Говяжий фарш, макароны", 343, "Второе")
+            )
+        )
+        put(
+            "Drink", arrayListOf(
+                Dish(6, "Кофе", "Капучино", 343, "Напиток"),
+                Dish(7, "Чай", "Чёрный", 343, "Напиток"),
+                Dish(8, "Сок", "Яблочный", 343,"Напиток")
+            )
+        )
     }
 
+
+    //Метод добавления блюда
+    fun addDish(){
+        for ( item in allDishMap.keys){
+            database.child("dish").child(item).setValue(allDishMap[item])
+        }
+
+    }
+
+
+
+    private val allDish=ArrayList<Dish>()
     private val studentChoice=ArrayList<Dish>()
 
     private val dishForChoiceLive:MutableLiveData<ArrayList<Dish>> by lazy { MutableLiveData<ArrayList<Dish>>() }
@@ -28,11 +71,12 @@ class Repository {
 
     fun downLoadAllDish(){
         database.child("dish").get().addOnSuccessListener {
-            allDish.clear()
             if(it.exists()) {
-                for (dishs in it.children) {
-                    val dish=dishs.getValue(Dish::class.java)
-                    allDish.add(dish!!)
+                for (types in it.children) {
+                    for (dishes in types.children) {
+                        val dish = dishes.getValue(Dish::class.java)
+                        allDish.add(dish!!)
+                    }
                 }
             }
 
@@ -53,9 +97,6 @@ class Repository {
     }
 
 
-    fun addDish(){
-        database.child("dish").setValue(allDish)
-    }
 
     fun downLoadDishForChoice(date:String){
         Log.d("FENIX",date)
@@ -79,7 +120,6 @@ class Repository {
 
 
     fun downLoadDishForChoiceCreator(date:String){
-        Log.d("FENIX",date)
         database.child("Выбор").child(date).get().addOnSuccessListener {
             dishForChoiceCopy.clear()
             if(it.exists()){
@@ -90,9 +130,9 @@ class Repository {
                 }
             }
             else{
-                dishForChoiceCopy.add(Dish(10000,"Выберите блюдо","Выберите блюдо"))
-                dishForChoiceCopy.add(Dish(10001,"Выберите блюдо","Выберите блюдо"))
-                dishForChoiceCopy.add(Dish(10002,"Выберите блюдо","Выберите блюдо"))
+                dishForChoiceCopy.add(Dish(10000,"Выберите первое блюдо",""))
+                dishForChoiceCopy.add(Dish(10001,"Выберите второе блюдо",""))
+                dishForChoiceCopy.add(Dish(10002,"Выберите напиток",""))
                 dishForChoiceLive.postValue(dishForChoiceCopy)
             }
         }
@@ -139,6 +179,9 @@ class Repository {
     fun getStudentDishLive(): MutableLiveData<ArrayList<Dish>> {
         return dishStudentLive
     }
+
+
+    //
 
 
 }
