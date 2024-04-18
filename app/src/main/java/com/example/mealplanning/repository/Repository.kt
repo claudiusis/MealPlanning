@@ -251,14 +251,15 @@ class Repository {
 
         database.child("Продукты").child(productName).get().addOnSuccessListener {
             if (it.exists()){
-                var oldCount=it.getValue(Int::class.java)
-                oldCount=oldCount!! + count
-                val product=Product(productName,oldCount)
-                allProductCopy.find { product.name == it.name }?.count = product.count
+                val _product=it.getValue(Product::class.java)
+                _product!!.count+= count
+                allProductCopy.find { _product!!.name == it.name }?.count = _product!!.count
                 allProductLive.postValue(allProductCopy)
-                database.child("Продукты").child(productName).setValue(product)
+                database.child("Продукты").child(productName).setValue(_product)
             }else{
                 val product=Product(productName,count)
+                allProductCopy.add(product)
+                allProductLive.postValue(allProductCopy)
                 database.child("Продукты").child(productName).setValue(product)
             }
         }
