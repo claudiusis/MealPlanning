@@ -32,7 +32,6 @@ class ControllerFragment : Fragment() {
         return mBinding.root
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -45,8 +44,8 @@ class ControllerFragment : Fragment() {
         viewModelController.getAllProductsLive().observe(
             viewLifecycleOwner,
         ){
-            arr->adapter.productList=arr
-            Log.d("RRR",arr.toString())
+                arr->
+            adapter.productList = arr
         }
         mBinding.productRecycler.adapter=adapter
 
