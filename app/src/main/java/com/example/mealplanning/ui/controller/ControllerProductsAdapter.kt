@@ -13,12 +13,8 @@ class ControllerProductsAdapter() : RecyclerView.Adapter<ControllerProductsAdapt
 
     var productList = listOf<Product>()
         set(value) {
-            val callback = MyDiffUtil(oldArray = field, newArray = value,
-                { old, new -> old.name == new.name },
-                {old, new -> old.count==new.count})
             field = value
-            val diffResult = DiffUtil.calculateDiff(callback)
-            diffResult.dispatchUpdatesTo(this)
+            notifyDataSetChanged()
         }
 
 

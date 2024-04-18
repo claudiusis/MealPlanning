@@ -35,7 +35,7 @@ class Repository {
     private val allAccountsLive : MutableLiveData<ArrayList<AccountsData>> by lazy {MutableLiveData<ArrayList<AccountsData>>()}
     private val allAccountsCopy=ArrayList<AccountsData>()
 
-    private val allProductCopy=ArrayList<Product>()
+    private var allProductCopy= ArrayList<Product>()
     private val allProductLive:MutableLiveData<ArrayList<Product>> by lazy {MutableLiveData<ArrayList<Product>>()}
 
     private val allDishMap = HashMap<String, ArrayList<Dish>>().apply {    put(
@@ -249,11 +249,11 @@ class Repository {
 
     fun createSupply(productName:String,count:Int){
 
-        database.child("Продукты").child(productName).get().addOnSuccessListener {
+        database.child("Продукты").child(productName).get().addOnSuccessListener { it ->
             if (it.exists()){
                 val _product=it.getValue(Product::class.java)
                 _product!!.count+= count
-                allProductCopy.find { _product!!.name == it.name }?.count = _product!!.count
+                allProductCopy.find { it.name == _product!!.name }?.count = _product!!.count
                 allProductLive.postValue(allProductCopy)
                 database.child("Продукты").child(productName).setValue(_product)
             }else{
