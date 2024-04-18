@@ -157,12 +157,13 @@ class Repository {
     //ЛОГИКА ШКОЛЬНИКА
 
     fun upLoadStudentDish(date:String){
-        database.child("ВыборШкольника/тестовый айди/$date").setValue(dishStudentLive.value)
+        database.child("ВыборШкольника/$date/тестовый айди").setValue(dishStudentLive.value)
         Log.d("QWERTY",dishStudentLive.toString())
     }
     fun downLoadMyChoice(date:String){
         Log.d("FENIX",date)
-        database.child("ВыборШкольника").child("тестовый айди").child(date).get().addOnSuccessListener {
+        database.child("ВыборШкольника").child(date).child("тестовый айди").get().addOnSuccessListener {
+            Log.d("RRR","зашел")
             dishStudentCopyList.clear()
             if(it.exists()){
                 for (dishs in it.children){
