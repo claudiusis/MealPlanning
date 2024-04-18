@@ -10,6 +10,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.mealplanning.R
 import com.example.mealplanning.databinding.FragmentLoginBinding
+import com.example.mealplanning.viewModels.AdminViewModel
+import com.example.mealplanning.viewModels.ControllerViewModel
 import com.example.mealplanning.viewModels.CreatorViewModel
 import com.example.mealplanning.viewModels.StudentViewModel
 
@@ -17,6 +19,9 @@ class LoginFragment : Fragment() {
 
     private val viewModelCreator: CreatorViewModel by activityViewModels<CreatorViewModel>()
     private val viewModelStudent: StudentViewModel by activityViewModels<StudentViewModel>()
+    private val viewModelAdmin:AdminViewModel by activityViewModels<AdminViewModel> ()
+    private val viewModelController: ControllerViewModel by activityViewModels<ControllerViewModel> ()
+
 
     private var _binding:FragmentLoginBinding?=null
 
@@ -28,7 +33,6 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding=FragmentLoginBinding.inflate(inflater, container, false)
-
         viewModelCreator.addDish()
         val calendar=Calendar.getInstance()
         val currentDay = calendar.get(Calendar.DAY_OF_MONTH)
@@ -39,6 +43,9 @@ class LoginFragment : Fragment() {
         viewModelStudent.downLoadMyChoice()
         viewModelCreator.downLoadDishForChoice()
         viewModelStudent.downLoadDishForChoice()
+        viewModelAdmin.downLoadAllAccounts()
+        viewModelCreator.downLoadAllDish()
+
 
 
         mBinding.studentBtn.setOnClickListener {
@@ -47,7 +54,14 @@ class LoginFragment : Fragment() {
         mBinding.workerBtn.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_calendarMenuCreator)
         }
+        mBinding.AdminBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_adminAccountsFragment)
+        }
 
+        mBinding.controlerBtn.setOnClickListener {
+            viewModelController.downLoadAllProducts()
+            findNavController().navigate(R.id.action_loginFragment_to_controllerFragment)
+        }
 
         return mBinding.root
     }

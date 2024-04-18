@@ -52,7 +52,7 @@ class DishAdapter(
 
         holder.mBinding.infoButton.setOnClickListener() {
             viewModelCreator.setPositionChoice(position)
-            fragment.findNavController().navigate(R.id.action_chooseFood_to_informationCreatorFragment)
+            fragment.findNavController().navigate(R.id.to)
 
         }
     }

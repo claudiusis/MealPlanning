@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -45,159 +45,23 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-            android:id="@+id/linearLayout4"
-            android:layout_width="match_parent"
-            android:layout_height="480dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="8dp"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recycler_student_choice">
-
-            <LinearLayout
-                android:id="@+id/layout_first_dish"
-                android:layout_width="match_parent"
-                android:layout_height="160dp"
-                android:orientation="vertical">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/foodName1"
-                        android:layout_width="160dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:text="Макароны с сыром"
-                        android:textSize="32sp"
-                        app:layout_constraintBottom_toBottomOf="@+id/imageFood1"
-                        app:layout_constraintStart_toEndOf="@+id/imageFood1"
-                        app:layout_constraintTop_toTopOf="@+id/imageFood1" />
-
-                    <ImageView
-                        android:id="@+id/imageFood1"
-                        android:layout_width="128dp"
-                        android:layout_height="128dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="16dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@android:drawable/btn_star_big_on" />
-
-                    <CheckBox
-                        android:id="@+id/checkFood1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toBottomOf="@+id/imageFood1"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/foodName1"
-                        app:layout_constraintTop_toTopOf="@+id/imageFood1" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/layout_second_dish"
-                android:layout_width="match_parent"
-                android:layout_height="160dp"
-                android:orientation="vertical">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <CheckBox
-                        android:id="@+id/checkFood2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toBottomOf="@+id/imageFood2"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/foodName2"
-                        app:layout_constraintTop_toTopOf="@+id/imageFood2" />
-
-                    <TextView
-                        android:id="@+id/foodName2"
-                        android:layout_width="160dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:text="Пюре с котлетой"
-                        android:textSize="32sp"
-                        app:layout_constraintBottom_toBottomOf="@+id/imageFood2"
-                        app:layout_constraintStart_toEndOf="@+id/imageFood2"
-                        app:layout_constraintTop_toTopOf="@+id/imageFood2" />
-
-                    <ImageView
-                        android:id="@+id/imageFood2"
-                        android:layout_width="128dp"
-                        android:layout_height="128dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="16dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@android:drawable/btn_star_big_on" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/layout_threed_dish"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <CheckBox
-                        android:id="@+id/checkFood3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toBottomOf="@+id/imageFood3"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/foodName3"
-                        app:layout_constraintTop_toTopOf="@+id/imageFood3" />
-
-                    <TextView
-                        android:id="@+id/foodName3"
-                        android:layout_width="160dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:text="Плов"
-                        android:textSize="32sp"
-                        app:layout_constraintBottom_toBottomOf="@+id/imageFood3"
-                        app:layout_constraintStart_toEndOf="@+id/imageFood3"
-                        app:layout_constraintTop_toTopOf="@+id/imageFood3" />
-
-                    <ImageView
-                        android:id="@+id/imageFood3"
-                        android:layout_width="128dp"
-                        android:layout_height="128dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="16dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@android:drawable/btn_star_big_on" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </LinearLayout>
-        </LinearLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonConfirm"
-            android:textAllCaps="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="16dp"
             android:backgroundTint="#EDEDED"
-            app:cornerRadius="50dp"
-            android:textColor="@color/black"
-            android:layout_marginTop="800dp"
             android:text="Подтверждение"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            app:cornerRadius="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
+            app:layout_constraintTop_toBottomOf="@id/recycler_student_choice" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</ScrollView>
+</androidx.core.widget.NestedScrollView>

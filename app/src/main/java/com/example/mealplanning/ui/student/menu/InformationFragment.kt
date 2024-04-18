@@ -30,19 +30,10 @@ class InformationFragment : Fragment() {
             parentFragmentManager.popBackStack()
         }
 
-        val numberDish=viewModelStudent.getPositionChoice()
-
-
-        val dish = if(numberDish >= 100) {
-            viewModelStudent.getDishFromChoice(numberDish - 100)
-        } else {
-            viewModelStudent.getFromAllDish(numberDish)
-        }
-
-
-
-        mBinding.nameDish.text=dish.name
-        mBinding.ingredients.text=dish.ingredients
+        val numberDish=viewModelStudent.getShowMore()
+//        val dish=viewModelStudent.getDishFromChoice(numberDish)
+//        mBinding.nameDish.text=dish.name
+//        mBinding.ingredients.text=dish.ingredients
 
 
         return mBinding.root
