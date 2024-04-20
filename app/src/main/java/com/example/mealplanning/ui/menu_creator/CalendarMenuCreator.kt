@@ -56,6 +56,7 @@ class CalendarMenuCreator : Fragment() {
         calendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
             val selectedDate = "${dayOfMonth}d${month + 1}m${year}y"
             viewModelCreator.setDateCalendar(selectedDate)
+            viewModelCreator.setDateC(year, month, dayOfMonth)
             viewModelCreator.downLoadDishForChoice()
         }
 
