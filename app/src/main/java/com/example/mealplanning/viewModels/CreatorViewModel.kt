@@ -1,5 +1,6 @@
 package com.example.mealplanning.viewModels
 
+import android.icu.util.Calendar
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.mealplanning.repository.Repository
@@ -14,7 +15,40 @@ class CreatorViewModel: ViewModel() {
     private var dateCalendarMenuCreator="w"
 
     private var keyForDishes=""
+    private var date=0
+    private var isAvailableToOpen=true
 
+
+
+    fun setDateC(year: Int, month: Int, dayOfMonth: Int){
+        val currentDate=Calendar.getInstance()
+        val currentHour=currentDate.get(Calendar.HOUR)
+
+        val tomorrowDate = Calendar.getInstance()
+        tomorrowDate.add(Calendar.DAY_OF_YEAR, 1)
+        val choosedDate = Calendar.getInstance()
+        choosedDate.set(year, month, date)
+
+
+
+
+       if (
+           choosedDate.get(Calendar.YEAR) == tomorrowDate.get(Calendar.YEAR) &&
+           choosedDate.get(Calendar.MONTH) == tomorrowDate.get(Calendar.MONTH) &&
+           choosedDate.get(Calendar.DAY_OF_MONTH) == tomorrowDate.get(Calendar.DAY_OF_MONTH)
+           && currentHour>=16
+       ) {
+           isAvailableToOpen = true
+       } else if (
+           currentDate.get(Calendar.YEAR) == choosedDate.get(Calendar.YEAR)
+           && currentDate.get(Calendar.MONTH) == choosedDate.get(Calendar.MONTH)
+           && currentDate.get(Calendar.DAY_OF_MONTH) == choosedDate.get(Calendar.DAY_OF_MONTH)
+           && currentHour <=12
+       ) {
+           isAvailableToOpen = false
+       }
+
+    }
 
     fun setKeyForDishes(key: String){
         keyForDishes=key
@@ -41,7 +75,7 @@ class CreatorViewModel: ViewModel() {
     }
 
     fun downLoadDishForChoice(){
-        repository.downLoadDishForChoiceCreator(dateCalendarMenuCreator)
+        repository.downLoadDishForChoiceCreator(dateCalendarMenuCreator, isAvailableToOpen)
     }
     fun setPositionChoice(pos:Int){
         positionChoice=pos
