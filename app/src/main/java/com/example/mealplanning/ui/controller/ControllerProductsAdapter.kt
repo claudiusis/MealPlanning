@@ -18,6 +18,7 @@ class ControllerProductsAdapter() : RecyclerView.Adapter<ControllerProductsAdapt
         }
 
 
+
     inner class ProductViewHolder (item: View) : RecyclerView.ViewHolder(item) {
         val id = item.findViewById<TextView>(R.id.product_id)
         val name = item.findViewById<TextView>(R.id.product_name)

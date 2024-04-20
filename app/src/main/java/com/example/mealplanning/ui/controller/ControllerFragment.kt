@@ -44,9 +44,8 @@ class ControllerFragment : Fragment() {
         viewModelController.getAllProductsLive().observe(
             viewLifecycleOwner,
         ){
-            arr->
+                arr->
             adapter.productList = arr
-
         }
         mBinding.productRecycler.adapter=adapter
 
