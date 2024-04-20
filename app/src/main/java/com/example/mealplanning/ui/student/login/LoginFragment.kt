@@ -38,11 +38,9 @@ class LoginFragment : Fragment() {
         val currentDay = calendar.get(Calendar.DAY_OF_MONTH)
         val currentMonth = calendar.get(Calendar.MONTH) + 1 // Месяцы в Calendar начинаются с 0
         val currentYear = calendar.get(Calendar.YEAR)
-        viewModelCreator.setDateC(currentYear, currentMonth, currentDay)
         viewModelCreator.setDateCalendar("${currentDay}d${currentMonth}m${currentYear}y")
         viewModelStudent.setDateCalendar("${currentDay}d${currentMonth}m${currentYear}y")
         viewModelStudent.downLoadMyChoice()
-        viewModelCreator.downLoadDishForChoice()
         viewModelStudent.downLoadDishForChoice()
         viewModelAdmin.downLoadAllAccounts()
         viewModelCreator.downLoadAllDish()

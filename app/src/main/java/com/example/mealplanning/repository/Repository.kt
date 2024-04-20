@@ -124,59 +124,38 @@ class Repository {
     }
 
 
-    fun downLoadDishForChoiceCreator(date:String, flag:Boolean){
-        Log.d("RRR","попал ли 2${flag}")
-        if (flag){
-            Log.d("FENIX",date)
-            database.child("Выбор").child(date).get().addOnSuccessListener {
-                dishForChoiceCopy.clear()
-                if(it.exists()){
-                    for(types in it.children){
-                        dishForChoiceCopy[types.key.toString()]= arrayListOf()
-                        for (dishes in types.children){
-                            val dish=dishes.getValue(Dish::class.java)
-                            dishForChoiceCopy[types.key]?.add(dish!!)
-                            dishForChoiceLive.postValue(dishForChoiceCopy)
-                        }
+    fun downLoadDishForChoiceCreator(date:String,  result: (String)->Unit){
+        database.child("Выбор").child(date).get().addOnSuccessListener {
+            dishForChoiceCopy.clear()
+            if (it.exists()) {
+                for (types in it.children) {
+                    dishForChoiceCopy[types.key.toString()] = arrayListOf()
+                    for (dishes in types.children) {
+                        val dish = dishes.getValue(Dish::class.java)
+                        dishForChoiceCopy[types.key]?.add(dish!!)
+                        dishForChoiceLive.postValue(dishForChoiceCopy)
                     }
                 }
-                else{
-                    dishForChoiceCopy.put("First", arrayListOf(
+                result.invoke("chose")
+            } else {
+                    dishForChoiceCopy["First"] = arrayListOf(
                         Dish(0, "Выберите первое"),
                         Dish(0, "Выберите первое"),
                         Dish(0, "Выберите первое")
-                    ))
-                    dishForChoiceCopy.put("Second", arrayListOf(
+                    )
+                    dishForChoiceCopy["Second"] = arrayListOf(
                         Dish(0, "Выберите второе"),
                         Dish(0, "Выберите второе"),
                         Dish(0, "Выберите второе")
-                    ))
-                    dishForChoiceCopy.put("Drink", arrayListOf(
+                    )
+                    dishForChoiceCopy["Drink"] = arrayListOf(
                         Dish(0, "Выберите напиток"),
                         Dish(0, "Выберите напиток"),
                         Dish(0, "Выберите напиток")
-                    ))
+                    )
                     dishForChoiceLive.postValue(dishForChoiceCopy)
-                }
+                result.invoke("choose")
             }
-        }else{
-            Log.d("RRR","попал ли $flag")
-            dishForChoiceCopy.put("First", arrayListOf(
-                Dish(0, "Выбор осуществляется в день до с 16:00 и в день до 12:00"),
-                Dish(0, "Выбор осуществляется в день до с 16:00 и в день до 12:00"),
-                Dish(0, "Выбор осуществляется в день до с 16:00 и в день до 12:00")
-            ))
-            dishForChoiceCopy.put("Second", arrayListOf(
-                Dish(0, "Выбор осуществляется в день до с 16:00 и в день до 12:00"),
-                Dish(0, "Выбор осуществляется в день до с 16:00 и в день до 12:00"),
-                Dish(0, "Выбор осуществляется в день до с 16:00 и в день до 12:00")
-            ))
-            dishForChoiceCopy.put("Drink", arrayListOf(
-                Dish(0, "Выбор осуществляется в день до с 16:00 и в день до 12:00"),
-                Dish(0, "Выбор осуществляется в день до с 16:00 и в день до 12:00"),
-                Dish(0, "Выбор осуществляется в день до с 16:00 и в день до 12:00")
-            ))
-            dishForChoiceLive.postValue(dishForChoiceCopy)
         }
     }
 

@@ -52,12 +52,52 @@ class CalendarMenuCreator : Fragment() {
 
         calendarView.setDate(selectedDateInMillis, true, true)
 
+        //Выбранная дата
+        val date = Calendar.getInstance()
 
         calendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
             val selectedDate = "${dayOfMonth}d${month + 1}m${year}y"
+            date.set(year, month, dayOfMonth)
             viewModelCreator.setDateCalendar(selectedDate)
-            viewModelCreator.setDateC(year, month, dayOfMonth)
-            viewModelCreator.downLoadDishForChoice()
+            viewModelCreator.downLoadDishForChoice(year, month, dayOfMonth)
+        }
+
+        viewModelCreator.statusOfChoose.observe(viewLifecycleOwner){
+            when (it){
+                "alreadyLate" -> {
+                    mBinding.chooseFood2RecyclerView.visibility = View.GONE
+                    mBinding.chooseFood1RecyclerView.visibility = View.GONE
+                    mBinding.chooseFood3RecyclerView.visibility = View.GONE
+                    mBinding.titleFirst.visibility = View.GONE
+                    mBinding.titleSecond.visibility = View.GONE
+                    mBinding.titleThird.visibility = View.GONE
+
+                    mBinding.informationText.visibility = View.VISIBLE
+                    mBinding.informationText.text = "Вы опоздали с выбором"
+                }
+                "early" -> {
+                    mBinding.chooseFood2RecyclerView.visibility = View.GONE
+                    mBinding.chooseFood1RecyclerView.visibility = View.GONE
+                    mBinding.chooseFood3RecyclerView.visibility = View.GONE
+                    mBinding.titleFirst.visibility = View.GONE
+                    mBinding.titleSecond.visibility = View.GONE
+                    mBinding.titleThird.visibility = View.GONE
+
+                    mBinding.informationText.visibility = View.VISIBLE
+                    date.add(Calendar.DAY_OF_YEAR, -1)
+                    mBinding.informationText.text = "Слишком рано... Приходите ${date.get(Calendar.DAY_OF_MONTH)}.${date.get(Calendar.MONTH+1)}.${date.get(Calendar.YEAR)} после 16:00"
+                }
+                else -> {
+                    mBinding.chooseFood2RecyclerView.visibility = View.VISIBLE
+                    mBinding.chooseFood1RecyclerView.visibility = View.VISIBLE
+                    mBinding.chooseFood3RecyclerView.visibility = View.VISIBLE
+                    mBinding.titleFirst.visibility = View.VISIBLE
+                    mBinding.titleSecond.visibility = View.VISIBLE
+                    mBinding.titleThird.visibility = View.VISIBLE
+
+                    mBinding.informationText.visibility = View.GONE
+                }
+            }
         }
 
 
