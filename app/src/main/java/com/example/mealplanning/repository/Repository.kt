@@ -95,6 +95,24 @@ class Repository {
         database.child("Выбор/$date").setValue(dishForChoiceCopy)
     }
 
+    fun getDishFromChoice(number:Int): Dish? {
+        val dishMap = dishForChoiceLive.value
+        return dishMap?.values?.flatten()?.getOrNull(number)
+    }
+
+    fun getDishById(id: Int): Dish? {
+
+        for (dishList in allDishMap.values) {
+            for (dish in dishList) {
+                if (dish.id == id) {
+                    return dish
+                }
+            }
+        }
+        return null
+    }
+
+
 
 //    fun addDish(){
 //        database.child("dish").setValue(allDish)

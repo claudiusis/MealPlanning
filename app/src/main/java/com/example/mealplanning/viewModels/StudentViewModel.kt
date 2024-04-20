@@ -13,6 +13,8 @@ class StudentViewModel:ViewModel() {
 
     private var dateCalendarStudent="w"
     private var positionChoice=0
+
+    private var keyForDishes=""
     private var keyType=""
 
     fun getKeyType(): String {
@@ -67,6 +69,13 @@ class StudentViewModel:ViewModel() {
     }
     fun replaceDishForChoice(pos : Int, dish: Dish){
         repository.replaceDishForChoiceStudent(pos, dish)
+    }
+    fun getDishById(id: Int): Dish? {
+        return repository.getDishById(id)
+    }
+
+    fun setKeyForDishes(key: String){
+        keyForDishes=key
     }
 
 

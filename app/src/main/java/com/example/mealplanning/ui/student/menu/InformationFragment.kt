@@ -30,11 +30,14 @@ class InformationFragment : Fragment() {
             parentFragmentManager.popBackStack()
         }
 
-        val numberDish=viewModelStudent.getShowMore()
-//        val dish=viewModelStudent.getDishFromChoice(numberDish)
-//        mBinding.nameDish.text=dish.name
-//        mBinding.ingredients.text=dish.ingredients
+        val selectedDishId = viewModelStudent.getPositionChoice()
 
+        val dish = viewModelStudent.getDishById(selectedDishId)
+
+        dish?.let {
+            mBinding.nameDish.text = it.name
+            mBinding.ingredients.text = it.ingredients
+        }
 
         return mBinding.root
     }

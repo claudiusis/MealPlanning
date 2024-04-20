@@ -18,6 +18,7 @@ import com.example.mealplanning.viewModels.CreatorViewModel
 class DishAdapter(
     private val fragment: ChooseFoodFragment,
     private val viewModelCreator: CreatorViewModel) : RecyclerView.Adapter<DishAdapter.MyViewHolder>() {
+    private val shouldHideInfoButtonList = mutableListOf<Boolean>()
 
 
     var notesList = listOf<Dish>()
@@ -25,6 +26,15 @@ class DishAdapter(
             val callback = MyDiffUtil(oldArray = field, newArray = value,
                 {old, new ->  old.id==new.id})
             field = value
+            shouldHideInfoButtonList.clear()
+            for (dish in value) {
+                shouldHideInfoButtonList.add(
+                    dish.name == "Выберите первое" ||
+                            dish.name == "Выберите второе" ||
+                            dish.name == "Выберите напиток"
+                )
+            }
+            notifyDataSetChanged()
             val diffResult = DiffUtil.calculateDiff(callback)
             diffResult.dispatchUpdatesTo(this)
         }
@@ -39,10 +49,11 @@ class DishAdapter(
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.onBind(notesList[position])
 
-        if(holder.mBinding.textNameDish.text.equals("Выберите блюдо")) {
+        if (shouldHideInfoButtonList.getOrNull(position) == true) {
             holder.mBinding.infoButton.visibility = View.GONE
+        } else {
+            holder.mBinding.infoButton.visibility = View.VISIBLE
         }
-
 
         holder.mBinding.itemDish.setOnClickListener {
             viewModelCreator.replaceDishForChoice(viewModelCreator.getPositionChoice(),notesList[position])
