@@ -19,12 +19,23 @@ class AdapterDishAfterChoice(
     private val typeDish:String
 ) : RecyclerView.Adapter<AdapterDishAfterChoice.AfterChoiceDishViewHolder>() {
 
+    private val shouldHideInfoButtonList = mutableListOf<Boolean>()
+
 
     var notesList = listOf<Dish>()
         set(value) {
             val callback = MyDiffUtil(oldArray = field, newArray = value,
                 {old, new ->  old.id==new.id})
             field = value
+            shouldHideInfoButtonList.clear()
+            for (dish in value) {
+                shouldHideInfoButtonList.add(
+                    dish.name == "Выберите первое" ||
+                            dish.name == "Выберите второе" ||
+                            dish.name == "Выберите напиток"
+                )
+            }
+            notifyDataSetChanged()
             val diffResult = DiffUtil.calculateDiff(callback)
             diffResult.dispatchUpdatesTo(this)
         }
@@ -37,10 +48,27 @@ class AdapterDishAfterChoice(
     override fun onBindViewHolder(holder: AfterChoiceDishViewHolder, position: Int) {
         holder.onBind(notesList[position])
 
+        if (shouldHideInfoButtonList.getOrNull(position) == true) {
+            holder.mBinding.infoButton.visibility = View.GONE
+        } else {
+            holder.mBinding.infoButton.visibility = View.VISIBLE
+        }
+
         holder.mBinding.itemDish.setOnClickListener {
-            viewModelCreator.setPositionChoice(position)
+            holder.mBinding.itemDish.setOnClickListener {
+                viewModelCreator.setPositionChoice(position)
+                viewModelCreator.setKeyForDishes(typeDish)
+                fragment.findNavController().navigate(R.id.action_calendarMenuCreator_to_chooseFood)
+            }
+        }
+
+        holder.mBinding.infoButton.setOnClickListener {
+            val selectedDishId = notesList[position].id
+            if (selectedDishId != null) {
+                viewModelCreator.setPositionChoice(selectedDishId)
+            }
             viewModelCreator.setKeyForDishes(typeDish)
-            fragment.findNavController().navigate(R.id.action_calendarMenuCreator_to_chooseFood)
+            fragment.findNavController().navigate(R.id.action_calendarMenuCreator_to_informationCreatorFragment)
         }
 
     }

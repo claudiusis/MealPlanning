@@ -1,8 +1,10 @@
 package com.example.mealplanning.ui.menu_creator
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.navigation.fragment.findNavController
@@ -16,6 +18,7 @@ import com.example.mealplanning.viewModels.CreatorViewModel
 class DishAdapter(
     private val fragment: ChooseFoodFragment,
     private val viewModelCreator: CreatorViewModel) : RecyclerView.Adapter<DishAdapter.MyViewHolder>() {
+    private val shouldHideInfoButtonList = mutableListOf<Boolean>()
 
 
     var notesList = listOf<Dish>()
@@ -23,6 +26,15 @@ class DishAdapter(
             val callback = MyDiffUtil(oldArray = field, newArray = value,
                 {old, new ->  old.id==new.id})
             field = value
+            shouldHideInfoButtonList.clear()
+            for (dish in value) {
+                shouldHideInfoButtonList.add(
+                    dish.name == "Выберите первое" ||
+                            dish.name == "Выберите второе" ||
+                            dish.name == "Выберите напиток"
+                )
+            }
+            notifyDataSetChanged()
             val diffResult = DiffUtil.calculateDiff(callback)
             diffResult.dispatchUpdatesTo(this)
         }
@@ -36,10 +48,23 @@ class DishAdapter(
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.onBind(notesList[position])
+
+        if (shouldHideInfoButtonList.getOrNull(position) == true) {
+            holder.mBinding.infoButton.visibility = View.GONE
+        } else {
+            holder.mBinding.infoButton.visibility = View.VISIBLE
+        }
+
         holder.mBinding.itemDish.setOnClickListener {
             viewModelCreator.replaceDishForChoice(viewModelCreator.getPositionChoice(),notesList[position])
 //            viewModelCreator.addSelectedDish(notesList.get(position),viewModelCreator.getPositionChoice())
             fragment.findNavController().navigate(R.id.action_chooseFood_to_calendarMenuCreator)
+        }
+
+        holder.mBinding.infoButton.setOnClickListener() {
+            viewModelCreator.setPositionChoice(position)
+            fragment.findNavController().navigate(R.id.action_chooseFood_to_informationCreatorFragment)
+
         }
     }
 
@@ -56,10 +81,10 @@ class DishAdapter(
         private val imageView: ImageView = itemView.findViewById(R.id.imageDish)
         private val nameDish: TextView = itemView.findViewById(R.id.textNameDish)
         private val descriptionDish: TextView = itemView.findViewById(R.id.textDescriptionDish)
-
         fun onBind(items:Dish){
             nameDish.text=items.name
             descriptionDish.text=items.ingredients
+
         }
     }
 }

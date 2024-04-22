@@ -134,4 +134,14 @@ class CreatorViewModel: ViewModel() {
     fun getAllDishList(): ArrayList<Dish>? {
         return repository.getAllDishList(keyForDishes)
     }
+
+    fun getDishFromChoice(number : Int): Dish? {
+        return repository.getDishFromChoice(number)
+    }
+
+    fun getDishById(id: Int): Dish? {
+        return repository.getDishById(id)
+    }
+
+
 }
