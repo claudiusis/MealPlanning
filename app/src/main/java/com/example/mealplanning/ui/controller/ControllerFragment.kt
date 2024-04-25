@@ -29,6 +29,7 @@ class ControllerFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentControlerBinding.inflate(layoutInflater)
+        viewModelController.downLoadAllProducts()
         return mBinding.root
     }
 

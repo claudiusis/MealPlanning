@@ -40,7 +40,7 @@ class LoginFragment : Fragment() {
         viewModelStudent.setDateCalendar("${currentDay}d${currentMonth}m${currentYear}y")
         viewModelCook.setDateCalendar("${currentDay}d${currentMonth}m${currentYear}y")
         viewModelStudent.downLoadMyChoice()
-        viewModelCreator.downLoadDishForChoice()
+        viewModelCreator.downLoadDishForChoice(currentYear, currentMonth, currentDay)
         viewModelStudent.downLoadDishForChoice()
         viewModelCook.downLoadDishForChoice()
 
@@ -60,6 +60,9 @@ class LoginFragment : Fragment() {
         }
         mBinding.cookBtn.setOnClickListener() {
             findNavController().navigate(R.id.action_loginFragment_to_cookFragment)
+        }
+        mBinding.controlerBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_controllerFragment)
         }
 
         return mBinding.root

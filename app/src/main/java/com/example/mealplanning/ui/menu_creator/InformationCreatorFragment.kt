@@ -23,6 +23,7 @@ class InformationCreatorFragment : Fragment() {
     ): View? {
         _binding = FragmentInformationBinding.inflate(inflater, container, false)
 
+
         mBinding.buttonGoBack.setOnClickListener {
             parentFragmentManager.popBackStack()
         }
