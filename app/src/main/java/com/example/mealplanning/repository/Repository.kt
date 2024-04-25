@@ -137,40 +137,39 @@ class Repository {
 
 
 
-    fun downLoadDishForChoiceCreator(date:String){
-        Log.d("FENIX",date)
+    fun downLoadDishForChoiceCreator(date:String,  result: (String)->Unit){
         database.child("Выбор").child(date).get().addOnSuccessListener {
             dishForChoiceCopy.clear()
-            if(it.exists()){
-                for(types in it.children){
-                    dishForChoiceCopy[types.key.toString()]= arrayListOf()
-                    for (dishes in types.children){
-                        val dish=dishes.getValue(Dish::class.java)
+            if (it.exists()) {
+                for (types in it.children) {
+                    dishForChoiceCopy[types.key.toString()] = arrayListOf()
+                    for (dishes in types.children) {
+                        val dish = dishes.getValue(Dish::class.java)
                         dishForChoiceCopy[types.key]?.add(dish!!)
                         dishForChoiceLive.postValue(dishForChoiceCopy)
                     }
                 }
-            }
-            else{
-                dishForChoiceCopy.put("First", arrayListOf(
+                result.invoke("chose")
+            } else {
+                dishForChoiceCopy["First"] = arrayListOf(
                     Dish(0, "Выберите первое"),
                     Dish(0, "Выберите первое"),
                     Dish(0, "Выберите первое")
-                ))
-                dishForChoiceCopy.put("Second", arrayListOf(
+                )
+                dishForChoiceCopy["Second"] = arrayListOf(
                     Dish(0, "Выберите второе"),
                     Dish(0, "Выберите второе"),
                     Dish(0, "Выберите второе")
-                ))
-                dishForChoiceCopy.put("Drink", arrayListOf(
+                )
+                dishForChoiceCopy["Drink"] = arrayListOf(
                     Dish(0, "Выберите напиток"),
                     Dish(0, "Выберите напиток"),
                     Dish(0, "Выберите напиток")
-                ))
+                )
                 dishForChoiceLive.postValue(dishForChoiceCopy)
+                result.invoke("choose")
             }
         }
-
     }
 
     fun getListAfterChoiceLive(): MutableLiveData<HashMap<String, ArrayList<Dish>>> {
