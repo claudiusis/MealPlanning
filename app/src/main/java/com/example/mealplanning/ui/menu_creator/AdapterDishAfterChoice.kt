@@ -1,10 +1,8 @@
 package com.example.mealplanning.ui.menu_creator
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.navigation.fragment.findNavController
@@ -17,8 +15,11 @@ import com.example.mealplanning.viewModels.CreatorViewModel
 
 class AdapterDishAfterChoice(
     private val fragment: CalendarMenuCreator,
-    private val viewModelCreator:CreatorViewModel
+    private val viewModelCreator:CreatorViewModel,
+    private val typeDish:String
 ) : RecyclerView.Adapter<AdapterDishAfterChoice.AfterChoiceDishViewHolder>() {
+
+    private val shouldHideInfoButtonList = mutableListOf<Boolean>()
 
 
     var notesList = listOf<Dish>()
@@ -26,11 +27,17 @@ class AdapterDishAfterChoice(
             val callback = MyDiffUtil(oldArray = field, newArray = value,
                 {old, new ->  old.id==new.id})
             field = value
+            shouldHideInfoButtonList.clear()
+            for (dish in value) {
+                shouldHideInfoButtonList.add(
+                    dish.name == "Выберите первое" ||
+                            dish.name == "Выберите второе" ||
+                            dish.name == "Выберите напиток"
+                )
+            }
+            notifyDataSetChanged()
             val diffResult = DiffUtil.calculateDiff(callback)
             diffResult.dispatchUpdatesTo(this)
-
-
-
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AfterChoiceDishViewHolder {
@@ -41,27 +48,26 @@ class AdapterDishAfterChoice(
     override fun onBindViewHolder(holder: AfterChoiceDishViewHolder, position: Int) {
         holder.onBind(notesList[position])
 
-<<<<<<< HEAD
-=======
-
-        if(holder.mBinding.textNameDish.text.equals("Выберите блюдо")) {
+        if (shouldHideInfoButtonList.getOrNull(position) == true) {
             holder.mBinding.infoButton.visibility = View.GONE
-
-        }
-        else {
+        } else {
             holder.mBinding.infoButton.visibility = View.VISIBLE
         }
 
-
-
->>>>>>> 500ce8aa4a6e9054a71b151515d7673cf7446c23
         holder.mBinding.itemDish.setOnClickListener {
-            viewModelCreator.setPositionChoice(position)
-            fragment.findNavController().navigate(R.id.action_calendarMenuCreator_to_chooseFood)
+            holder.mBinding.itemDish.setOnClickListener {
+                viewModelCreator.setPositionChoice(position)
+                viewModelCreator.setKeyForDishes(typeDish)
+                fragment.findNavController().navigate(R.id.action_calendarMenuCreator_to_chooseFood)
+            }
         }
 
-        holder.mBinding.infoButton.setOnClickListener() {
-            viewModelCreator.setPositionChoice(position + 100)
+        holder.mBinding.infoButton.setOnClickListener {
+            val selectedDishId = notesList[position].id
+            if (selectedDishId != null) {
+                viewModelCreator.setPositionChoice(selectedDishId)
+            }
+            viewModelCreator.setKeyForDishes(typeDish)
             fragment.findNavController().navigate(R.id.action_calendarMenuCreator_to_informationCreatorFragment)
         }
 
@@ -84,25 +90,14 @@ class AdapterDishAfterChoice(
         private val imageView: ImageView = itemView.findViewById(R.id.imageDish)
         private val nameDish: TextView = itemView.findViewById(R.id.textNameDish)
         private val descriptionDish: TextView = itemView.findViewById(R.id.textDescriptionDish)
-<<<<<<< HEAD
-        private val infoBtn : ImageButton = itemView.findViewById(R.id.infoButton)
 
-=======
-        private val infoBtn: ImageButton = itemView.findViewById(R.id.infoButton)
->>>>>>> 500ce8aa4a6e9054a71b151515d7673cf7446c23
         fun onBind(items:Dish){
             nameDish.text=items.name
             descriptionDish.text=items.ingredients
-
-<<<<<<< HEAD
-            if (nameDish.text.toString()=="Выберите блюдо"){
-                infoBtn.visibility = View.GONE
-            } else {
-                infoBtn.visibility = View.VISIBLE
-            }
-=======
->>>>>>> 500ce8aa4a6e9054a71b151515d7673cf7446c23
         }
+
+
+
 
     }
 }

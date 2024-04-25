@@ -30,8 +30,7 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val navController=(childFragmentManager.findFragmentById(R.id.main_nav_container)
                 as NavHostFragment).navController
-        NavigationUI.setupWithNavController(view.findViewById(R.id.bottom_navigation_view)
-                as NavigationBarView, navController)
+        NavigationUI.setupWithNavController(view.findViewById<NavigationBarView>(R.id.bottom_navigation_view)!!, navController)
     }
 
     override fun onDestroyView() {

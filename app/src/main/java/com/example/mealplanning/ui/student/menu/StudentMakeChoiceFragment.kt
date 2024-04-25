@@ -31,12 +31,13 @@ class StudentMakeChoiceFragment : Fragment() {
         viewModelStudent.getDishForChoice().observe(
             viewLifecycleOwner,
         ){
-            array->recyclerStudentMakeChoice.notesList=array
+            array->recyclerStudentMakeChoice.notesList= array[viewModelStudent.getKeyType()]!!
         }
         mBinding.recyclerMakeChoice.adapter=recyclerStudentMakeChoice
 
-
-
+        mBinding.btnBack.setOnClickListener {
+            parentFragmentManager.popBackStack()
+        }
 
 
         return mBinding.root

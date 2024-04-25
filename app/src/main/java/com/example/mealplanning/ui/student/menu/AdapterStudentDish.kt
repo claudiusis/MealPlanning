@@ -19,12 +19,23 @@ class AdapterStudentDish(
     private val viewModelStudent: StudentViewModel
 ) : RecyclerView.Adapter<AdapterStudentDish.StudentDish>() {
 
+    private val shouldHideInfoButtonList = mutableListOf<Boolean>()
 
     var notesList = listOf<Dish>()
         set(value) {
             val callback = MyDiffUtil(oldArray = field, newArray = value,
                 {old, new ->  old.id==new.id})
             field = value
+            shouldHideInfoButtonList.clear()
+            for (dish in value) {
+                shouldHideInfoButtonList.add(
+                    dish.name == "Выберите первое" ||
+                            dish.name == "Выберите второе" ||
+                            dish.name == "Выберите напиток" ||
+                            dish.name == "Выберите третье"
+                )
+            }
+            notifyDataSetChanged()
             val diffResult = DiffUtil.calculateDiff(callback)
             diffResult.dispatchUpdatesTo(this)
         }
@@ -37,26 +48,24 @@ class AdapterStudentDish(
     override fun onBindViewHolder(holder: StudentDish, position: Int) {
         holder.onBind(notesList[position])
 
-        if(holder.mBinding.textNameDish.text.equals("Выберите первое") ||
-            holder.mBinding.textNameDish.text.equals("Выберите второе") ||
-            holder.mBinding.textNameDish.text.equals("Выберите третье") ||
-            holder.mBinding.textNameDish.text.equals("Будет скоро") ||
-            holder.mBinding.textNameDish.text.equals("Выберите блюдо")) {
+        if (shouldHideInfoButtonList.getOrNull(position) == true) {
             holder.mBinding.infoButton.visibility = View.GONE
-
-        }
-        else {
+        } else {
             holder.mBinding.infoButton.visibility = View.VISIBLE
         }
 
         holder.mBinding.itemDish.setOnClickListener {
             viewModelStudent.setPositionChoice(position)
-            fragment.findNavController().navigate(R.id.action_menuFragment_to_studentMakeChoiceFragment)
             viewModelStudent.downLoadDishForChoice()
+            fragment.findNavController().navigate(R.id.action_menuFragment_to_studentMakeChoiceFragment)
+
         }
 
-        holder.mBinding.infoButton.setOnClickListener() {
-            viewModelStudent.setPositionChoice(position + 100)
+        holder.mBinding.infoButton.setOnClickListener {
+            val selectedDishId = notesList[position].id
+            if (selectedDishId != null) {
+                viewModelStudent.setPositionChoice(selectedDishId)
+            }
             fragment.findNavController().navigate(R.id.action_menuFragment_to_informationFragment)
         }
 

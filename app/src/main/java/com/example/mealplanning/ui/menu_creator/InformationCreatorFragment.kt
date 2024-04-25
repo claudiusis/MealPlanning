@@ -13,47 +13,35 @@ import com.example.mealplanning.viewModels.StudentViewModel
 
 class InformationCreatorFragment : Fragment() {
 
-
-    private var _binding: FragmentInformationBinding?=null
-    private val viewModelCreator: CreatorViewModel by activityViewModels<CreatorViewModel>()
+    private var _binding: FragmentInformationBinding? = null
+    private val viewModelCreator: CreatorViewModel by activityViewModels()
     private val mBinding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding= FragmentInformationBinding.inflate(inflater,container,false)
+        _binding = FragmentInformationBinding.inflate(inflater, container, false)
+
 
         mBinding.buttonGoBack.setOnClickListener {
             parentFragmentManager.popBackStack()
         }
 
-        val numberDish=viewModelCreator.getPositionChoice()
+        val selectedDishId = viewModelCreator.getPositionChoice()
 
-        lateinit var dish : Dish
-        if(numberDish >= 100) {
-            dish = viewModelCreator.getDishFromChoice(numberDish - 100)
+        val dish = viewModelCreator.getDishById(selectedDishId)
+
+        dish?.let {
+            mBinding.nameDish.text = it.name
+            mBinding.ingredients.text = it.ingredients
         }
-        else {
-            dish = viewModelCreator.getFromAllDish(numberDish)
-        }
-
-
-        Log.d("QWERTY", numberDish.toString())
-        mBinding.nameDish.text=dish.name
-        mBinding.ingredients.text=dish.ingredients
-
 
         return mBinding.root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding=null
+        _binding = null
     }
-
-
-
-
-
 }

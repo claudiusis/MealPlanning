@@ -21,7 +21,10 @@ class CalendarMenuCreator : Fragment() {
 
     private var _binding: FragmentCalendarMenuCreatorBinding?=null
     private val viewModelCreator: CreatorViewModel by activityViewModels<CreatorViewModel>()
-    private lateinit var dishAfterChoiceRecyclerAdapter:AdapterDishAfterChoice
+    private lateinit var dishAfterChoiceRecyclerAdapter1:AdapterDishAfterChoice
+    private lateinit var dishAfterChoiceRecyclerAdapter2:AdapterDishAfterChoice
+    private lateinit var dishAfterChoiceRecyclerAdapter3:AdapterDishAfterChoice
+
     private val mBinding get()=_binding!!
 
 
@@ -49,24 +52,88 @@ class CalendarMenuCreator : Fragment() {
 
         calendarView.setDate(selectedDateInMillis, true, true)
 
+        //Выбранная дата
+        val date = Calendar.getInstance()
 
         calendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
             val selectedDate = "${dayOfMonth}d${month + 1}m${year}y"
+            date.set(year, month, dayOfMonth)
             viewModelCreator.setDateCalendar(selectedDate)
-            viewModelCreator.downLoadDishForChoice()
+            viewModelCreator.downLoadDishForChoice(year, month, dayOfMonth)
+        }
+
+        viewModelCreator.statusOfChoose.observe(viewLifecycleOwner){
+            when (it){
+                "alreadyLate" -> {
+                    mBinding.chooseFood2RecyclerView.visibility = View.GONE
+                    mBinding.chooseFood1RecyclerView.visibility = View.GONE
+                    mBinding.chooseFood3RecyclerView.visibility = View.GONE
+                    mBinding.titleFirst.visibility = View.GONE
+                    mBinding.titleSecond.visibility = View.GONE
+                    mBinding.titleThird.visibility = View.GONE
+
+                    mBinding.informationText.visibility = View.VISIBLE
+                    mBinding.informationText.text = "Вы опоздали с выбором"
+                }
+                "early" -> {
+                    mBinding.chooseFood2RecyclerView.visibility = View.GONE
+                    mBinding.chooseFood1RecyclerView.visibility = View.GONE
+                    mBinding.chooseFood3RecyclerView.visibility = View.GONE
+                    mBinding.titleFirst.visibility = View.GONE
+                    mBinding.titleSecond.visibility = View.GONE
+                    mBinding.titleThird.visibility = View.GONE
+
+                    mBinding.informationText.visibility = View.VISIBLE
+                    date.add(Calendar.DAY_OF_YEAR, -1)
+                    mBinding.informationText.text = "Слишком рано... Приходите ${date.get(Calendar.DAY_OF_MONTH)}.${date.get(Calendar.MONTH+1)}.${date.get(Calendar.YEAR)} после 16:00"
+                }
+                else -> {
+                    mBinding.chooseFood2RecyclerView.visibility = View.VISIBLE
+                    mBinding.chooseFood1RecyclerView.visibility = View.VISIBLE
+                    mBinding.chooseFood3RecyclerView.visibility = View.VISIBLE
+                    mBinding.titleFirst.visibility = View.VISIBLE
+                    mBinding.titleSecond.visibility = View.VISIBLE
+                    mBinding.titleThird.visibility = View.VISIBLE
+
+                    mBinding.informationText.visibility = View.GONE
+                }
+            }
         }
 
 
-        dishAfterChoiceRecyclerAdapter= AdapterDishAfterChoice(this,viewModelCreator)
-        mBinding.chooseFoodRecyclerView.layoutManager=LinearLayoutManager(requireContext())
+        dishAfterChoiceRecyclerAdapter1= AdapterDishAfterChoice(this,viewModelCreator,"First")
+        mBinding.chooseFood1RecyclerView.layoutManager=LinearLayoutManager(requireContext())
+        dishAfterChoiceRecyclerAdapter2=AdapterDishAfterChoice(this,viewModelCreator,"Second")
+        mBinding.chooseFood2RecyclerView.layoutManager=LinearLayoutManager(requireContext())
+        dishAfterChoiceRecyclerAdapter3=AdapterDishAfterChoice(this,viewModelCreator,"Drink")
+        mBinding.chooseFood3RecyclerView.layoutManager=LinearLayoutManager(requireContext())
+
+
+
+
+
+
+
         viewModelCreator.getListAfterChoiceLive().observe(
             viewLifecycleOwner,
         ){
-            array->dishAfterChoiceRecyclerAdapter.notesList=array
-            dishAfterChoiceRecyclerAdapter.notifyDataSetChanged()
-            Log.d("FENIX","${dishAfterChoiceRecyclerAdapter.notesList}Массив в адаптере")
+            array->dishAfterChoiceRecyclerAdapter1.notesList= array["First"]!!
+            dishAfterChoiceRecyclerAdapter2.notesList=array["Second"]!!
+            dishAfterChoiceRecyclerAdapter3.notesList=array["Drink"]!!
+            Log.d("QWERTY",dishAfterChoiceRecyclerAdapter1.notesList.toString())
+            dishAfterChoiceRecyclerAdapter1.notifyDataSetChanged()
+
+            Log.d("FENIX","${dishAfterChoiceRecyclerAdapter1.notesList}Массив в адаптере")
         }
-        mBinding.chooseFoodRecyclerView.adapter=dishAfterChoiceRecyclerAdapter
+
+
+
+
+        mBinding.chooseFood1RecyclerView.adapter=dishAfterChoiceRecyclerAdapter1
+        mBinding.chooseFood2RecyclerView.adapter=dishAfterChoiceRecyclerAdapter2
+        mBinding.chooseFood3RecyclerView.adapter=dishAfterChoiceRecyclerAdapter3
+
+
 //        dishAfterChoiceRecyclerAdapter.notesList=viewModelCreator.getSelectedDish()
 
 
