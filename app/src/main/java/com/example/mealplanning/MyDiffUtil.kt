@@ -3,8 +3,8 @@ package com.example.mealplanning
 import androidx.recyclerview.widget.DiffUtil
 
 class MyDiffUtil<T>(val oldArray: List<T>, val newArray: List<T>,
-                    private val areItemsTheSameImpl: (old: T, new: T)->Boolean ={oldItem, newItem -> oldItem==newItem},
-                    private val areContentTheSameImpl: (old: T, new: T) -> Boolean = {oldItem, newItem -> oldItem==newItem}) : DiffUtil.Callback() {
+                    private val areItemsTheSameImpl: (old: T, new: T) -> Boolean = {oldItem, newItem -> oldItem == newItem},
+                    private val areContentTheSameImpl: (old: T, new: T) -> Boolean = {oldItem, newItem -> oldItem == newItem}) : DiffUtil.Callback() {
     override fun getOldListSize() = oldArray.size
 
     override fun getNewListSize() = newArray.size

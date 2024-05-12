@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_loginFragment_to_controllerFragment"
             app:destination="@id/controllerFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_cookFragment"
+            app:destination="@id/cookFragment" />
     </fragment>
     <fragment
         android:id="@+id/mainFragment"
@@ -36,6 +39,9 @@
         <action
             android:id="@+id/action_calendarMenuCreator_to_chooseFood"
             app:destination="@id/chooseFood" />
+        <action
+            android:id="@+id/action_calendarMenuCreator_to_informationCreatorFragment"
+            app:destination="@id/informationCreatorFragment" />
     </fragment>
     <fragment
         android:id="@+id/chooseFood"
@@ -45,6 +51,9 @@
         <action
             android:id="@+id/action_chooseFood_to_calendarMenuCreator"
             app:destination="@id/calendarMenuCreator" />
+        <action
+            android:id="@+id/action_chooseFood_to_informationCreatorFragment"
+            app:destination="@id/informationCreatorFragment" />
     </fragment>
     <fragment
         android:id="@+id/adminAccountsFragment"
@@ -77,4 +86,13 @@
             android:id="@+id/action_controllerFragment_to_productCreationFragment"
             app:destination="@id/productCreationFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/informationCreatorFragment"
+        android:name="com.example.mealplanning.ui.menu_creator.InformationCreatorFragment"
+        android:label="InformationCreatorFragment" />
+    <fragment
+        android:id="@+id/cookFragment"
+        android:name="com.example.mealplanning.ui.cook.CookFragment"
+        android:label="fragment_cook"
+        tools:layout="@layout/fragment_cook" />
 </navigation>

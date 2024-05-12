@@ -19,12 +19,23 @@ class AdapterStudentDish(
     private val viewModelStudent: StudentViewModel
 ) : RecyclerView.Adapter<AdapterStudentDish.StudentDish>() {
 
+    private val shouldHideInfoButtonList = mutableListOf<Boolean>()
 
     var notesList = listOf<Dish>()
         set(value) {
             val callback = MyDiffUtil(oldArray = field, newArray = value,
                 {old, new ->  old.id==new.id})
             field = value
+            shouldHideInfoButtonList.clear()
+            for (dish in value) {
+                shouldHideInfoButtonList.add(
+                    dish.name == "Выберите первое" ||
+                            dish.name == "Выберите второе" ||
+                            dish.name == "Выберите напиток" ||
+                            dish.name == "Выберите третье"
+                )
+            }
+            notifyDataSetChanged()
             val diffResult = DiffUtil.calculateDiff(callback)
             diffResult.dispatchUpdatesTo(this)
         }
@@ -36,11 +47,26 @@ class AdapterStudentDish(
 
     override fun onBindViewHolder(holder: StudentDish, position: Int) {
         holder.onBind(notesList[position])
+
+        if (shouldHideInfoButtonList.getOrNull(position) == true) {
+            holder.mBinding.infoButton.visibility = View.GONE
+        } else {
+            holder.mBinding.infoButton.visibility = View.VISIBLE
+        }
+
         holder.mBinding.itemDish.setOnClickListener {
             viewModelStudent.setPositionChoice(position)
             viewModelStudent.downLoadDishForChoice()
             fragment.findNavController().navigate(R.id.action_menuFragment_to_studentMakeChoiceFragment)
 
+        }
+
+        holder.mBinding.infoButton.setOnClickListener {
+            val selectedDishId = notesList[position].id
+            if (selectedDishId != null) {
+                viewModelStudent.setPositionChoice(selectedDishId)
+            }
+            fragment.findNavController().navigate(R.id.action_menuFragment_to_informationFragment)
         }
 
     }
